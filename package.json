@@ -2,10 +2,10 @@
   "name": "boiler-plate",
   "version": "1.0.0",
   "description": "boiler plate",
-  "main": "index.js",
+  "main": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon"
+    "server": "nodemon server/index.js"
   },
   "author": "moon",
   "license": "ISC",

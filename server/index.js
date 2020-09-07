@@ -31,6 +31,12 @@ app.get('/', (req, res) => {
   res.send('Hello World! hey');
 });
 
+app.get('/api/hello', (req, res) => {
+  res.status(200).json({
+    success: true,
+  });
+});
+
 app.post('/api/users/register', (req, res) => {
   // 회원 가입 시 필요한 정보들을 client 에서 가져오면
   // 그 것들을 데이터 베이스에 넣어준다.
