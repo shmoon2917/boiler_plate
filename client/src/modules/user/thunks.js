@@ -7,7 +7,3 @@ export const loginUserThunk = createAsyncThunk(
   AuthService.login,
   "/"
 );
-
-export const goToHome = () => (dispatch, { history }) => {
-  history.push("/");
-};

@@ -28,11 +28,7 @@ const LoginPage = ({ history }) => {
       password,
     };
 
-    try {
-      await dispatch(loginUserThunk(body));
-    } catch (e) {
-      console.log("에러", e);
-    }
+    dispatch(loginUserThunk(body));
   };
 
   return (

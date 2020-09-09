@@ -17,14 +17,11 @@ const login = async (body) => {
   const { email, password } = body;
   try {
     const response = await axios.post(API_URL + "signin", { email, password });
-    console.log(response);
 
     if (response.data.accessToken) {
       localStorage.setItem("user", JSON.stringify(response.data));
       return response.data;
-    }
-
-    if (!response.data.loginSuccess) {
+    } else if (!response.data.loginSuccess) {
       throw response.data;
     }
   } catch (e) {
