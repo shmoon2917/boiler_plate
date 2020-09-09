@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { registerUser } from '../../../modules/user/action';
-import { withRouter } from 'react-router-dom';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+// import { registerUser } from "../../../modules/user/actions";
+import { withRouter } from "react-router-dom";
 const RegisterPage = ({ history }) => {
   const [inputs, setInputs] = useState({
-    email: '',
-    name: '',
-    password: '',
-    confirmPassword: '',
+    email: "",
+    name: "",
+    password: "",
+    confirmPassword: "",
   });
 
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const RegisterPage = ({ history }) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      return alert('비밀번호 확인부탁');
+      return alert("비밀번호 확인부탁");
     }
 
     let body = {
@@ -36,28 +36,28 @@ const RegisterPage = ({ history }) => {
       name,
     };
 
-    const res = await dispatch(registerUser(body));
+    // const res = await dispatch(registerUser(body));
 
-    if (res.payload.success) {
-      history.push('/login');
-    } else {
-      alert('Error');
-    }
+    // if (res.payload.success) {
+    //   history.push("/login");
+    // } else {
+    //   alert("Error");
+    // }
   };
 
   return (
     <div
       style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        height: '100vh',
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        height: "100vh",
       }}
     >
       <form
         onSubmit={onSubmitForm}
-        style={{ display: 'flex', flexDirection: 'column' }}
+        style={{ display: "flex", flexDirection: "column" }}
       >
         <label>Email</label>
         <input

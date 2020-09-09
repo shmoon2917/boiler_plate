@@ -1,28 +1,19 @@
-import { LOGIN_USER, REGISTER_USER, AUTH_USER } from './action';
+import { LOGIN_USER, LOGIN_USER_SUCCESS, LOGIN_USER_ERROR } from "./actions";
+import { asyncState, createAsyncReducer } from "../../lib/reducerUtils";
 
 const initialState = {
-  loginSuccess: false,
+  user: asyncState.initial(),
   register: {},
-  userData: {},
 };
+
+console.log(initialState);
 
 const user = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_USER:
-      return {
-        ...state,
-        loginSuccess: action.payload,
-      };
-    case REGISTER_USER:
-      return {
-        ...state,
-        register: action.payload,
-      };
-    case AUTH_USER:
-      return {
-        ...state,
-        userData: action.payload,
-      };
+    case LOGIN_USER_SUCCESS:
+    case LOGIN_USER_ERROR:
+      return createAsyncReducer(LOGIN_USER, "user")(state, action);
     default:
       return state;
   }

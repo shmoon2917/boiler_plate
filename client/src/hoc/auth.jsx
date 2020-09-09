@@ -1,7 +1,7 @@
-import React from 'react';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { authUser } from '../modules/user/action';
+import React from "react";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { authUser } from "../modules/user/actions";
 
 export default (SpecificComponent, option, adminRoute = null) => {
   // null =>  아무나
@@ -16,13 +16,13 @@ export default (SpecificComponent, option, adminRoute = null) => {
         // 로그인하지않은상태
         if (!res.payload.isAuth) {
           if (option) {
-            props.history.push('/login');
+            props.history.push("/login");
           }
         } else {
           if (adminRoute && !res.payload.isAdmin) {
-            props.history.push('/');
+            props.history.push("/");
           } else if (option === false) {
-            props.history.push('/');
+            props.history.push("/");
           }
         }
       });

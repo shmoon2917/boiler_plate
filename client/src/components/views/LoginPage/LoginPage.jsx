@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { loginUser } from '../../../modules/user/action';
-
-import { withRouter } from 'react-router-dom';
+import React, { useState, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUserThunk } from "../../../modules/user";
 
 const LoginPage = ({ history }) => {
   const [inputs, setInputs] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
   const dispatch = useDispatch();
-
+  const { loading, error } = useSelector((state) => state.user.user);
   const { email, password } = inputs;
 
   const onChangeInput = (e) => {
@@ -25,35 +23,33 @@ const LoginPage = ({ history }) => {
   const onSubmitForm = async (e) => {
     e.preventDefault();
 
-    let body = {
+    const body = {
       email,
       password,
     };
 
-    const res = await dispatch(loginUser(body));
-
-    if (res.payload.loginSuccess) {
-      history.push('/');
-    } else {
-      alert('Error');
+    try {
+      await dispatch(loginUserThunk(body));
+    } catch (e) {
+      console.log("에러", e);
     }
   };
 
   return (
     <div
       style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        height: '100vh',
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        height: "100vh",
       }}
     >
       <form
         onSubmit={onSubmitForm}
-        style={{ display: 'flex', flexDirection: 'column' }}
+        style={{ display: "flex", flexDirection: "column" }}
       >
-        <label>Email</label>
+        <label htmlFor="email">Email</label>
         <input
           type="email"
           name="email"
@@ -61,7 +57,7 @@ const LoginPage = ({ history }) => {
           value={email}
           onChange={onChangeInput}
         />
-        <label>Password</label>
+        <label htmlFor="password">Password</label>
         <input
           type="password"
           name="password"
@@ -70,10 +66,11 @@ const LoginPage = ({ history }) => {
           onChange={onChangeInput}
         />
         <br />
-        <button>Login</button>
+        {error && <span style={{ color: "red" }}>{error.message}</span>}
+        <button>{loading ? <span>spinner</span> : <span>Login</span>}</button>
       </form>
     </div>
   );
 };
 
-export default withRouter(LoginPage);
+export default LoginPage;
