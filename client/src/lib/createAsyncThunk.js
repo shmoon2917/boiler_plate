@@ -1,4 +1,4 @@
-const createAsyncThunk = (type, promiseCreator, redirectURL = null) => {
+const createAsyncThunk = (type, promiseCreator) => {
   const thunk = (...params) => {
     const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
 
@@ -8,7 +8,7 @@ const createAsyncThunk = (type, promiseCreator, redirectURL = null) => {
         const payload = await promiseCreator(...params);
         dispatch({ type: SUCCESS, payload });
 
-        if (redirectURL) history.push(`${redirectURL}`);
+        return payload;
       } catch (e) {
         console.log("in thunk error");
         dispatch({ type: ERROR, payload: e, error: true });

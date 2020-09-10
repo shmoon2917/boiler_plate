@@ -17,6 +17,15 @@ export const loginUser = (body) => ({
   payload: body,
 });
 
+export const registerUser = (body) => ({
+  type: REGISTER_USER,
+  payload: body,
+});
+
+export const authUser = () => ({
+  type: AUTH_USER,
+});
+
 export const clearUser = () => ({
   type: CLEAR_USER,
 });
@@ -33,15 +42,6 @@ export const keepUserLoggedIn = (user) => ({
 
 //   return {
 //     type: REGISTER_USER,
-//     payload: request,
-//   };
-// };
-
-// export const authUser = () => {
-//   const request = axios.get("/api/users/auth").then((res) => res.data);
-
-//   return {
-//     type: AUTH_USER,
 //     payload: request,
 //   };
 // };

@@ -1,14 +1,27 @@
 import axios from "axios";
-import { response } from "express";
+import { authHeader } from "./auth-header";
 
 const API_URL = "/api/auth/";
 
-const register = (username, email, password) => {
-  return axios.post(API_URL + "signup", {
-    username,
-    email,
-    password,
-  });
+const register = async (body) => {
+  const { email, name, password } = body;
+  try {
+    const response = (
+      await axios.post(API_URL + "signup", {
+        name,
+        email,
+        password,
+      })
+    ).data;
+
+    if (response.status === "ok") {
+      return response.data;
+    } else {
+      throw response.error;
+    }
+  } catch (error) {
+    throw error;
+  }
 };
 
 const login = async (body) => {
@@ -44,9 +57,24 @@ const login = async (body) => {
 
 const logout = async () => {
   try {
-    const response = (await axios.get(API_URL + "signout")).data;
+    const response = (
+      await axios.get(API_URL + "signout", { headers: authHeader() })
+    ).data;
     if (response.status === "ok") {
       localStorage.removeItem("user");
+      return response.data;
+    } else {
+      throw response.error;
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
+const auth = async () => {
+  try {
+    const response = (await axios.get(API_URL, { headers: authHeader() })).data;
+    if (response.status === "ok") {
       return response.data;
     } else {
       throw response.error;

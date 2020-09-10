@@ -24,7 +24,7 @@ const App = () => {
         <NavBar />
         <Route exact path="/" component={LandingPage} />
         <Route exact path="/login" component={LoginPage} />
-        {/* <Route exact path="/register" component={RegisterPage} /> */}
+        <Route exact path="/register" component={RegisterPage} />
       </div>
     </>
   );

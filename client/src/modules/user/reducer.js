@@ -4,6 +4,9 @@ import {
   LOGIN_USER_ERROR,
   KEEP_USER_LOGGED_IN,
   CLEAR_USER,
+  REGISTER_USER,
+  REGISTER_USER_ERROR,
+  REGISTER_USER_SUCCESS,
 } from "./actions";
 import { asyncState, createAsyncReducer } from "../../lib/reducerUtils";
 
@@ -17,6 +20,10 @@ const user = (state = initialState, action) => {
     case LOGIN_USER_SUCCESS:
     case LOGIN_USER_ERROR:
       return createAsyncReducer(LOGIN_USER, "userInfo")(state, action);
+    case REGISTER_USER:
+    case REGISTER_USER_SUCCESS:
+    case REGISTER_USER_ERROR:
+      return createAsyncReducer(REGISTER_USER, "register")(state, action);
     case KEEP_USER_LOGGED_IN:
       return {
         ...state,

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-// import { registerUser } from "../../../modules/user/actions";
+import { registerUser, registerUserThunk } from "../../../modules/user";
 import { withRouter } from "react-router-dom";
 const RegisterPage = ({ history }) => {
   const [inputs, setInputs] = useState({
@@ -36,13 +36,7 @@ const RegisterPage = ({ history }) => {
       name,
     };
 
-    // const res = await dispatch(registerUser(body));
-
-    // if (res.payload.success) {
-    //   history.push("/login");
-    // } else {
-    //   alert("Error");
-    // }
+    dispatch(registerUserThunk(body));
   };
 
   return (

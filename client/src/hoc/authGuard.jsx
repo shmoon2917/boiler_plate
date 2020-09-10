@@ -3,11 +3,11 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { authUser } from "../modules/user/actions";
 
-export default (SpecificComponent, option, adminRoute = null) => {
+const AuthenticationCheck = (SpecificComponent, option, adminRoute = null) => {
   // null =>  아무나
   // true => 로그인한 유저만 출입가능 페이지
   // false => 로그인한 유저는 출입 불가능 페이지
-  const AuthenticationCheck = (props) => {
+  return (props) => {
     const dispatch = useDispatch();
     useEffect(() => {
       dispatch(authUser()).then((res) => {
@@ -30,6 +30,4 @@ export default (SpecificComponent, option, adminRoute = null) => {
 
     return <SpecificComponent />;
   };
-
-  return AuthenticationCheck;
 };

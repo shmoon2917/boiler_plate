@@ -37,14 +37,19 @@ app.get("/api/hello", (req, res) => {
   });
 });
 
-app.post("/api/users/register", (req, res) => {
+app.post("/api/auth/signup", (req, res) => {
   // 회원 가입 시 필요한 정보들을 client 에서 가져오면
   // 그 것들을 데이터 베이스에 넣어준다.
   const user = new User(req.body);
   user.save((err, userInfo) => {
-    if (err) return res.json({ success: false, err });
+    if (err) return res.status(400).json({ success: false, err });
     return res.status(200).json({
-      success: true,
+      status: "ok",
+      data: {
+        success: true,
+      },
+      message: "가입 성공",
+      error: "",
     });
   });
 });
@@ -95,7 +100,7 @@ app.post("/api/auth/signin", (req, res) => {
   });
 });
 
-app.get("/api/users/auth", auth, (req, res) => {
+app.get("/api/auth", auth, (req, res) => {
   // 미들웨어를 통과했다면 Authentication 이 True 라는 뜻.
   res.status(200).json({
     _id: req.user._id,
@@ -108,11 +113,20 @@ app.get("/api/users/auth", auth, (req, res) => {
   });
 });
 
-app.get("/api/users/logout", auth, (req, res) => {
+app.get("/api/auth/signout", auth, (req, res) => {
   User.findOneAndUpdate({ _id: req.user.id }, { token: "" }, (err, user) => {
-    if (err) return res.json({ success: false, err });
+    if (err)
+      return res.json({
+        status: "error",
+        data: {},
+        message: "",
+        error: err,
+      });
     return res.status(200).send({
-      success: true,
+      status: "ok",
+      data: {},
+      message: "로그아웃 성공",
+      error: "",
     });
   });
 });

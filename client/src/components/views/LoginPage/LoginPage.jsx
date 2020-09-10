@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUserThunk } from "../../../modules/user";
+import { loginUserThunk, registerUserThunk } from "../../../modules/user";
 
 const LoginPage = () => {
   const [inputs, setInputs] = useState({
@@ -28,7 +28,7 @@ const LoginPage = () => {
       password,
     };
 
-    dispatch(loginUserThunk(body));
+    const response = await dispatch(loginUserThunk(body));
   };
 
   return (
