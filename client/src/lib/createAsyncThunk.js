@@ -1,17 +1,21 @@
+import { alertActions } from '../modules/alert';
+
 const createAsyncThunk = (type, promiseCreator) => {
-  const thunk = (...params) => {
+  const thunk = (body, from) => {
     const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
 
     return async (dispatch, _getState, { history }) => {
       dispatch({ type });
       try {
-        const payload = await promiseCreator(...params);
+        const payload = await promiseCreator(body);
         dispatch({ type: SUCCESS, payload });
 
-        return payload;
+        if (from) {
+          history.push(`${from}`);
+        }
       } catch (e) {
-        console.log("in thunk error");
         dispatch({ type: ERROR, payload: e, error: true });
+        dispatch(alertActions.error(e));
       }
     };
   };

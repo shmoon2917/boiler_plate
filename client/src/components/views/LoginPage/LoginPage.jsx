@@ -1,15 +1,17 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { loginUserThunk, registerUserThunk } from "../../../modules/user";
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUserThunk, registerUserThunk } from '../../../modules/user';
+import { useLocation } from 'react-router-dom';
 
 const LoginPage = () => {
   const [inputs, setInputs] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.user.userInfo);
+  const { loading, error } = useSelector((state) => state.authentication.login);
   const { email, password } = inputs;
+  const location = useLocation();
 
   const onChangeInput = (e) => {
     const { value, name } = e.target;
@@ -20,30 +22,35 @@ const LoginPage = () => {
     });
   };
 
-  const onSubmitForm = async (e) => {
+  const onSubmitForm = (e) => {
     e.preventDefault();
 
-    const body = {
-      email,
-      password,
-    };
+    if (email && password) {
+      // get return url from location state or default to home page
+      const body = {
+        email,
+        password,
+      };
 
-    const response = await dispatch(loginUserThunk(body));
+      console.log(location);
+      const { from } = location.state || { from: { pathname: '/' } };
+      dispatch(loginUserThunk(body, from));
+    }
   };
 
   return (
     <div
       style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        height: "100vh",
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        height: '100vh',
       }}
     >
       <form
         onSubmit={onSubmitForm}
-        style={{ display: "flex", flexDirection: "column" }}
+        style={{ display: 'flex', flexDirection: 'column' }}
       >
         <label htmlFor="email">Email</label>
         <input
@@ -62,7 +69,7 @@ const LoginPage = () => {
           onChange={onChangeInput}
         />
         <br />
-        {error && <span style={{ color: "red" }}>{error}</span>}
+        {error && <span style={{ color: 'red' }}>{error}</span>}
         <button>{loading ? <span>spinner</span> : <span>Login</span>}</button>
       </form>
     </div>
