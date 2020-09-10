@@ -54,9 +54,10 @@ app.post("/api/auth/signin", (req, res) => {
   User.findOne({ email: req.body.email }, (err, user) => {
     if (!user) {
       return res.status(200).json({
-        loginSuccess: false,
-        type: "USER_DONT_EXIST",
-        message: "이메일에 해당하는 유저가 없습니다.",
+        status: "error",
+        data: {},
+        message: "",
+        error: "이메일에 해당하는 유저가 없습니다",
       });
     }
 
@@ -64,23 +65,31 @@ app.post("/api/auth/signin", (req, res) => {
     user.comparePassword(req.body.password, (err, isMatch) => {
       if (!isMatch) {
         return res.json({
-          loginSuccess: false,
-          message: "비밀번호가 틀렸습니다",
+          status: "error",
+          data: {},
+          message: "",
+          error: "비밀번호가 틀렸습니다",
         });
       }
       // 비밀번호까지 맞다면 Token 생성
       user.generateToken((err, user) => {
         if (err) return res.status(400).send(err);
         // 토큰을 저장한다.
-        const data = {
-          _id: user._id,
-          name: user.name,
-          email: user.email,
-          roles: user.role,
-          accessToken: user.token,
+
+        const responseObj = {
+          status: "ok",
+          data: {
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            roles: user.role,
+            accessToken: user.token,
+          },
+          message: "API 요청 성공했습니다",
+          error: "",
         };
 
-        res.status(200).json(data);
+        res.status(200).json(responseObj);
       });
     });
   });

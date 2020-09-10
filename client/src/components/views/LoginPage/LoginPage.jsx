@@ -1,14 +1,14 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUserThunk } from "../../../modules/user";
 
-const LoginPage = ({ history }) => {
+const LoginPage = () => {
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
   });
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.user.user);
+  const { loading, error } = useSelector((state) => state.user.userInfo);
   const { email, password } = inputs;
 
   const onChangeInput = (e) => {
@@ -62,7 +62,7 @@ const LoginPage = ({ history }) => {
           onChange={onChangeInput}
         />
         <br />
-        {error && <span style={{ color: "red" }}>{error.message}</span>}
+        {error && <span style={{ color: "red" }}>{error}</span>}
         <button>{loading ? <span>spinner</span> : <span>Login</span>}</button>
       </form>
     </div>
