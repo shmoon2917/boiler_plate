@@ -1,15 +1,23 @@
-import createAsyncThunk from '../../lib/createAsyncThunk';
-import AuthService from '../../services/auth.service';
-import { userConstants as type } from './constants';
+import createAsyncThunk from "../../lib/createAsyncThunk";
+import AuthService from "../../services/auth.service";
+import { userConstants } from "./constants";
 
 export const loginUserThunk = createAsyncThunk(
-  type.LOGIN_REQUEST,
+  userConstants.LOGIN_REQUEST,
   AuthService.login
 );
 
 export const registerUserThunk = createAsyncThunk(
-  type.REGISTER_USER,
+  userConstants.REGISTER_REQUEST,
   AuthService.register
 );
 
-export const authUserThunk = createAsyncThunk(type.AUTH_USER, AuthService.auth);
+export const logoutUserThunk = createAsyncThunk(
+  userConstants.LOGOUT_REQUEST,
+  AuthService.logout
+);
+
+export const authUserThunk = createAsyncThunk(
+  userConstants.AUTH_USER,
+  AuthService.auth
+);

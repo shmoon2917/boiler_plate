@@ -1,7 +1,7 @@
-import { alertActions } from '../modules/alert';
+import { alertActions } from "../modules/alert";
 
 const createAsyncThunk = (type, promiseCreator) => {
-  const thunk = (body, from) => {
+  const thunk = ({ body, from }) => {
     const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
 
     return async (dispatch, _getState, { history }) => {

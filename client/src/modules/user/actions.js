@@ -1,17 +1,17 @@
-import { userConstants as type } from './constants';
+import { userConstants as type } from "./constants";
 
 export const userActions = {
   login,
+  register,
 };
 
 function login(body) {
   return { type: type.LOGIN_REQUEST, payload: body };
 }
 
-export const registerUser = (body) => ({
-  type: type.REGISTER_USER,
-  payload: body,
-});
+function register(body) {
+  return { type: type.REGISTER_REQUEST, payload: body };
+}
 
 export const authUser = () => ({
   type: type.AUTH_USER,

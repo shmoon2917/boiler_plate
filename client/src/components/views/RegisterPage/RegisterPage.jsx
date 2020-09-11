@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { registerUser, registerUserThunk } from "../../../modules/user";
-import { withRouter } from "react-router-dom";
-const RegisterPage = ({ history }) => {
+import { registerUserThunk } from "../../../modules/user";
+import { useLocation } from "react-router-dom";
+
+const RegisterPage = () => {
   const [inputs, setInputs] = useState({
     email: "",
     name: "",
     password: "",
     confirmPassword: "",
   });
-
+  const location = useLocation();
   const dispatch = useDispatch();
 
   const { email, name, password, confirmPassword } = inputs;
@@ -27,16 +28,18 @@ const RegisterPage = ({ history }) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      return alert("비밀번호 확인부탁");
+      return alert("비밀번호 확인 부탁");
     }
 
-    let body = {
+    const body = {
       email,
       password,
       name,
     };
 
-    dispatch(registerUserThunk(body));
+    const { from } = location.state || { from: { pathname: "/" } };
+
+    dispatch(registerUserThunk({ body, from }));
   };
 
   return (
@@ -86,10 +89,10 @@ const RegisterPage = ({ history }) => {
           onChange={onChangeInput}
         />
         <br />
-        <button>Login</button>
+        <button>Register</button>
       </form>
     </div>
   );
 };
 
-export default withRouter(RegisterPage);
+export default RegisterPage;
