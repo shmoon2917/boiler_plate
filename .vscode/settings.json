@@ -1,0 +1,7 @@
+{
+  "editor.tabSize": 2,
+  "editor.codeActionsOnSave": null,
+  "auto-rename-tag.activationOnLanguage": ["html", "xml", "php", "javascript"],
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2
+}
