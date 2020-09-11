@@ -10,3 +10,13 @@
   justify-content: center;
   align-items: center;
 }
+
+.App__content {
+  height: 100vh;
+  padding-top: 69px;
+  min-height: calc(100vh - 80px);
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -42,7 +42,10 @@ const App = () => {
       )}
       <Router history={history}>
         <NavBar />
-        <div style={{ paddingTop: '69px', minheight: 'calc(100vh -80px' }}>
+        <div
+          className="App__content"
+          style={{ paddingTop: '69px', minheight: 'calc(100vh -80px)' }}
+        >
           <Switch>
             <Route exact path="/" component={LandingPage} />
             <AuthRoute path="/profile" type="private" component={ProfilePage} />
