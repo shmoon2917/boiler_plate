@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { registerUserThunk } from "../../../modules/user";
-import { useLocation } from "react-router-dom";
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { registerUserThunk } from '../../../_modules/user';
+import { useLocation } from 'react-router-dom';
 
 const RegisterPage = () => {
   const [inputs, setInputs] = useState({
-    email: "",
-    name: "",
-    password: "",
-    confirmPassword: "",
+    email: '',
+    name: '',
+    password: '',
+    confirmPassword: '',
   });
   const location = useLocation();
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const RegisterPage = () => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      return alert("비밀번호 확인 부탁");
+      return alert('비밀번호 확인 부탁');
     }
 
     const body = {
@@ -37,7 +37,7 @@ const RegisterPage = () => {
       name,
     };
 
-    const { from } = location.state || { from: { pathname: "/" } };
+    const { from } = location.state || { from: { pathname: '/' } };
 
     dispatch(registerUserThunk({ body, from }));
   };
@@ -45,16 +45,16 @@ const RegisterPage = () => {
   return (
     <div
       style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        height: "100vh",
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        height: '100vh',
       }}
     >
       <form
         onSubmit={onSubmitForm}
-        style={{ display: "flex", flexDirection: "column" }}
+        style={{ display: 'flex', flexDirection: 'column' }}
       >
         <label>Email</label>
         <input

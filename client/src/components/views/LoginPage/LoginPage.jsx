@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { loginUserThunk } from "../../../modules/user";
-import { useLocation } from "react-router-dom";
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUserThunk } from '../../../_modules/user';
+import { useLocation } from 'react-router-dom';
 
 const LoginPage = () => {
   const [inputs, setInputs] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.user.login);
@@ -15,7 +15,6 @@ const LoginPage = () => {
 
   const onChangeInput = (e) => {
     const { value, name } = e.target;
-    console.log(value, name);
     setInputs({
       ...inputs,
       [name]: value,
@@ -32,7 +31,7 @@ const LoginPage = () => {
         password,
       };
 
-      const { from } = location.state || { from: { pathname: "/" } };
+      const { from } = location.state || { from: { pathname: '/' } };
       dispatch(loginUserThunk({ body, from }));
     }
   };
@@ -40,16 +39,16 @@ const LoginPage = () => {
   return (
     <div
       style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        height: "100vh",
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        height: '100vh',
       }}
     >
       <form
         onSubmit={onSubmitForm}
-        style={{ display: "flex", flexDirection: "column" }}
+        style={{ display: 'flex', flexDirection: 'column' }}
       >
         <label htmlFor="email">Email</label>
         <input
@@ -68,8 +67,8 @@ const LoginPage = () => {
           onChange={onChangeInput}
         />
         <br />
-        {error && <span style={{ color: "red" }}>{error}</span>}
-        <button>{loading ? "spinner" : "Login"}</button>
+        {error && <span style={{ color: 'red' }}>{error}</span>}
+        <button>{loading ? 'spinner' : 'Login'}</button>
       </form>
     </div>
   );

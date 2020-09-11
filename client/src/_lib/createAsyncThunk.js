@@ -1,4 +1,4 @@
-import { alertActions } from "../modules/alert";
+import { alertActions } from '../_modules/alert';
 
 const createAsyncThunk = (type, promiseCreator) => {
   const thunk = ({ body, from }) => {

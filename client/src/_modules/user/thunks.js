@@ -1,6 +1,6 @@
-import createAsyncThunk from "../../lib/createAsyncThunk";
-import AuthService from "../../services/auth.service";
-import { userConstants } from "./constants";
+import createAsyncThunk from '../../_lib/createAsyncThunk';
+import AuthService from '../../_services/auth.service';
+import { userConstants } from './constants';
 
 export const loginUserThunk = createAsyncThunk(
   userConstants.LOGIN_REQUEST,

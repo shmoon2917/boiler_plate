@@ -1,0 +1,12 @@
+@import '~antd/dist/antd.css';
+
+.App__alert {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 200px;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
