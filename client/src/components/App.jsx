@@ -1,33 +1,36 @@
-import './App.css';
-import React, { useEffect } from 'react';
-import { Router, Route, Switch, Redirect } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { history } from '../_helpers';
-import { AuthRoute } from '../_components/AuthRoute';
-import { alertActions } from '../_modules/alert';
-import { Alert } from 'antd';
+import "./App.css";
+import React, { useEffect } from "react";
+import { Router, Route, Switch, Redirect } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { history } from "../_helpers";
+import { AuthRoute } from "../_components/AuthRoute";
+import { alertActions } from "../_modules/alert";
+import { Alert } from "antd";
+import AuthService from "../_services/auth.service";
+import { userActions } from "../_modules/user";
 
 // pages for this app
-import LandingPage from './views/LandingPage';
-import LoginPage from './views/LoginPage';
-import ProfilePage from './views/ProfilePage';
-import RegisterPage from './views/RegisterPage';
-import NavBar from './views/NavBar';
+import LandingPage from "./views/LandingPage";
+import LoginPage from "./views/LoginPage";
+import RegisterPage from "./views/RegisterPage";
+import UploadProductPage from "./views/UploadProductPage";
+import NavBar from "./views/NavBar";
 
 const App = () => {
   const alert = useSelector((state) => state.alert);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    history.listen((location, action) => {
-      dispatch(alertActions.clear());
-    });
-    // eslint-disable-next-line
-  }, []);
-
   const onCloseAlert = () => {
     setTimeout(() => dispatch(alertActions.clear()), 300);
   };
+
+  useEffect(() => {
+    const user = AuthService.getCurrentUser();
+    if (user) {
+      dispatch(userActions.checkUserIsLoggedIn(user));
+    }
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div className="App">
@@ -44,13 +47,13 @@ const App = () => {
         <NavBar />
         <div
           className="App__content"
-          style={{ paddingTop: '69px', minheight: 'calc(100vh -80px)' }}
+          style={{ paddingTop: "69px", minheight: "calc(100vh -80px)" }}
         >
           <Switch>
             <Route exact path="/" component={LandingPage} />
-            <AuthRoute path="/profile" type="private" component={ProfilePage} />
             <Route path="/login" component={LoginPage} />
             <Route path="/register" component={RegisterPage} />
+            <AuthRoute path="/product/upload" component={UploadProductPage} />
             <Redirect from="*" to="/" />
           </Switch>
         </div>

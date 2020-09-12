@@ -1,4 +1,4 @@
-import { alertActions } from '../_modules/alert';
+import { alertThunk } from "../_modules/alert";
 
 const createAsyncThunk = (type, promiseCreator) => {
   const thunk = ({ body, from }) => {
@@ -8,14 +8,15 @@ const createAsyncThunk = (type, promiseCreator) => {
       dispatch({ type });
       try {
         const payload = await promiseCreator(body);
-        dispatch({ type: SUCCESS, payload });
+        dispatch({ type: SUCCESS, payload: payload });
+        // dispatch(alertThunk(payload.message, "success"));
 
         if (from) {
           history.push(`${from}`);
         }
       } catch (e) {
         dispatch({ type: ERROR, payload: e, error: true });
-        dispatch(alertActions.error(e));
+        dispatch(alertThunk(e, "error"));
       }
     };
   };

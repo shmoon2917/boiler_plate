@@ -53,6 +53,7 @@ const auth = async () => {
 };
 
 const getCurrentUser = () => {
+  console.log("getCurrentUser from ls");
   return JSON.parse(localStorage.getItem("user"));
 };
 

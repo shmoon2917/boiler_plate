@@ -1,17 +1,12 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Drawer, Button } from 'antd';
-import { AlignRightOutlined } from '@ant-design/icons';
-import { LeftMenu } from './Sections/LeftMenu';
-import { RightMenu } from './Sections/RightMenu';
-import AuthService from '../../../_services/auth.service';
-import { logoutUserThunk } from '../../../_modules/user';
-import './Sections/NavBar.css';
+import React, { useState } from "react";
+import { Drawer, Button } from "antd";
+import { AlignRightOutlined } from "@ant-design/icons";
+import { LeftMenu } from "./Sections/LeftMenu";
+import { RightMenu } from "./Sections/RightMenu";
+import "./Sections/NavBar.css";
 
 const NavBar = () => {
   const [visible, setVisible] = useState(false);
-
-  const dispatch = useDispatch();
 
   const showDrawer = () => {
     setVisible(true);
@@ -25,7 +20,7 @@ const NavBar = () => {
     <>
       <nav
         className="menu"
-        style={{ position: 'fixed', zIndex: 5, width: '100%' }}
+        style={{ position: "fixed", zIndex: 5, width: "100%" }}
       >
         <div className="menu__logo">
           <a href="/">Logo</a>

@@ -40,13 +40,20 @@ app.get("/api/hello", (req, res) => {
 app.post("/api/auth/signup", (req, res) => {
   const user = new User(req.body);
   user.save((err, userInfo) => {
-    if (err) return res.status(400).json({ success: false, err });
+    if (err)
+      return res.status(400).json({
+        status: "error",
+        data: {},
+        message: "가입에 실패했습니다.",
+        error: "user-0004",
+      });
+
     return res.status(200).json({
       status: "ok",
       data: {
         success: true,
       },
-      message: "가입 성공",
+      message: "가입에 성공하였습니다",
       error: "",
     });
   });
@@ -97,7 +104,7 @@ app.post("/api/auth/signin", (req, res) => {
             roles: user.role,
             accessToken: user.token,
           },
-          message: "API 요청 성공했습니다",
+          message: "로그인하셨습니다",
           error: "",
         };
 
@@ -131,7 +138,7 @@ app.get("/api/auth/signout", auth, (req, res) => {
     return res.status(200).send({
       status: "ok",
       data: {},
-      message: "로그아웃 성공",
+      message: "로그아웃하셨습니다",
       error: "",
     });
   });

@@ -1,6 +1,9 @@
 import React from "react";
 
 import { Route, Redirect } from "react-router-dom";
+import { useSelector, shallowEqual } from "react-redux";
+import { asyncState } from "../_lib/reducerUtils";
+import AuthService from "../_services/auth.service";
 
 /* type
   private: 로그인 안 했으면 못 들어가는 페이지
@@ -8,7 +11,10 @@ import { Route, Redirect } from "react-router-dom";
   admin: 특정 어드민 아니면 못 들어가는 페이지
 */
 export const AuthRoute = ({ component: Component, type, ...rest }) => {
-  const user = localStorage.getItem("user");
+  const user =
+    useSelector((state) => state.user.login.data) || asyncState.initial();
+
+  console.log("authRoute", user);
 
   return (
     <Route

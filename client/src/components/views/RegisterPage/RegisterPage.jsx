@@ -1,97 +1,186 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { registerUserThunk } from '../../../_modules/user';
-import { useLocation } from 'react-router-dom';
+import React from "react";
+import { useDispatch } from "react-redux";
+import { registerUserThunk } from "../../../_modules/user";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import { Form, Input, Button } from "antd";
+
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 8 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 16 },
+  },
+};
+const tailFormItemLayout = {
+  wrapperCol: {
+    xs: {
+      span: 24,
+      offset: 0,
+    },
+    sm: {
+      span: 16,
+      offset: 8,
+    },
+  },
+};
 
 const RegisterPage = () => {
-  const [inputs, setInputs] = useState({
-    email: '',
-    name: '',
-    password: '',
-    confirmPassword: '',
-  });
-  const location = useLocation();
   const dispatch = useDispatch();
 
-  const { email, name, password, confirmPassword } = inputs;
-
-  const onChangeInput = (e) => {
-    const { value, name } = e.target;
-
-    setInputs({
-      ...inputs,
-      [name]: value,
-    });
-  };
-
-  const onSubmitForm = async (e) => {
-    e.preventDefault();
-
-    if (password !== confirmPassword) {
-      return alert('비밀번호 확인 부탁');
-    }
-
+  const onSubmitForm = ({ name, email, password, confirmPassword }) => {
     const body = {
+      name,
       email,
       password,
-      name,
+      confirmPassword,
     };
 
-    const { from } = location.state || { from: { pathname: '/' } };
+    const { from } = { from: { pathname: "/" } };
 
     dispatch(registerUserThunk({ body, from }));
   };
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        height: '100vh',
-      }}
+    <Formik
+      initialValues={{ email: "", name: "", password: "", confirmPassword: "" }}
+      validationSchema={Yup.object().shape({
+        email: Yup.string()
+          .email("Email is invalid")
+          .required("Eamil is required"),
+        name: Yup.string().required("User name is required"),
+        password: Yup.string()
+          .min(6, "Password must be at least 6 characters")
+          .required("Password is Required"),
+        confirmPassword: Yup.string()
+          .oneOf([Yup.ref("password"), null], "Passwords must match")
+          .required("Confirm password is required"),
+      })}
+      onSubmit={onSubmitForm}
     >
-      <form
-        onSubmit={onSubmitForm}
-        style={{ display: 'flex', flexDirection: 'column' }}
-      >
-        <label>Email</label>
-        <input
-          type="email"
-          name="email"
-          placeholder="이메일을 입력하세요"
-          value={email}
-          onChange={onChangeInput}
-        />
-        <label>Name</label>
-        <input
-          type="text"
-          name="name"
-          placeholder="이름을 입력하세요"
-          value={name}
-          onChange={onChangeInput}
-        />
-        <label>Password</label>
-        <input
-          type="password"
-          name="password"
-          placeholder="패스워드를 입력하세요"
-          value={password}
-          onChange={onChangeInput}
-        />
-        <label>Confirm Password</label>
-        <input
-          type="password"
-          name="confirmPassword"
-          placeholder="패스워드를 다시 한 번 입력하세요"
-          value={confirmPassword}
-          onChange={onChangeInput}
-        />
-        <br />
-        <button>Register</button>
-      </form>
-    </div>
+      {(props) => {
+        const {
+          values,
+          touched,
+          errors,
+          // dirty,
+          isSubmitting,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          // handleReset,
+        } = props;
+        return (
+          <>
+            <h2>Sign Up</h2>
+            <Form
+              style={{ minWidth: "375px" }}
+              {...formItemLayout}
+              onSubmit={handleSubmit}
+            >
+              <Form.Item required label="Name">
+                <Input
+                  id="name"
+                  placeholder="Enter your name"
+                  type="text"
+                  value={values.name}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className={
+                    errors.name && touched.name
+                      ? "text-input error"
+                      : "text-input"
+                  }
+                />
+                {errors.name && touched.name && (
+                  <div className="input-feedback">{errors.name}</div>
+                )}
+              </Form.Item>
+              <Form.Item
+                required
+                label="Email"
+                hasFeedback
+                validateStatus={
+                  errors.email && touched.email ? "error" : "success"
+                }
+              >
+                <Input
+                  id="email"
+                  placeholder="Enter your Email"
+                  type="email"
+                  value={values.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className={
+                    errors.email && touched.email
+                      ? "text-input error"
+                      : "text-input"
+                  }
+                />
+                {errors.email && touched.email && (
+                  <div className="input-feedback">{errors.email}</div>
+                )}
+              </Form.Item>
+              <Form.Item
+                required
+                label="Password"
+                hasFeedback
+                validateStatus={
+                  errors.password && touched.password ? "error" : "success"
+                }
+              >
+                <Input
+                  id="password"
+                  placeholder="Enter your password"
+                  type="password"
+                  value={values.password}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className={
+                    errors.password && touched.password
+                      ? "text-input error"
+                      : "text-input"
+                  }
+                />
+                {errors.password && touched.password && (
+                  <div className="input-feedback">{errors.password}</div>
+                )}
+              </Form.Item>
+              <Form.Item required label="Confirm" hasFeedback>
+                <Input
+                  id="confirmPassword"
+                  placeholder="Enter your confirmPassword"
+                  type="password"
+                  value={values.confirmPassword}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className={
+                    errors.confirmPassword && touched.confirmPassword
+                      ? "text-input error"
+                      : "text-input"
+                  }
+                />
+                {errors.confirmPassword && touched.confirmPassword && (
+                  <div className="input-feedback">{errors.confirmPassword}</div>
+                )}
+              </Form.Item>
+              <Form.Item {...tailFormItemLayout}>
+                <Button
+                  onClick={handleSubmit}
+                  type="primary"
+                  disabled={isSubmitting}
+                >
+                  Submit
+                </Button>
+              </Form.Item>
+            </Form>
+          </>
+        );
+      }}
+    </Formik>
   );
 };
 

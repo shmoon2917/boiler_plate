@@ -1,16 +1,18 @@
-import React from 'react';
-import { Menu } from 'antd';
-import { useSelector, useDispatch } from 'react-redux';
-import { logoutUserThunk } from '../../../../_modules/user';
-import AuthService from '../../../../_services/auth.service';
+import React from "react";
+import { Menu } from "antd";
+import { useSelector, useDispatch } from "react-redux";
+import { logoutUserThunk } from "../../../../_modules/user";
+import { asyncState } from "../../../../_lib/reducerUtils";
+import { Link } from "react-router-dom";
 
 export const RightMenu = (props) => {
-  // const { data: user } = useSelector((state) => state.login);
+  const { data: user } =
+    useSelector((state) => state.user.login) || asyncState.initial();
+
   const dispatch = useDispatch();
-  const user = AuthService.getCurrentUser();
 
   const onLogoutHandler = () => {
-    const from = { from: { pathname: '/' } };
+    const from = { from: { pathname: "/" } };
     dispatch(logoutUserThunk({ from }));
   };
 
@@ -28,8 +30,11 @@ export const RightMenu = (props) => {
   } else {
     return (
       <Menu mode={props.mode}>
+        <Menu.Item key="upload">
+          <Link to="/product/upload">Upload</Link>
+        </Menu.Item>
         <Menu.Item key="logout">
-          <a onClick={onLogoutHandler}>Logout</a>
+          <span onClick={onLogoutHandler}>Logout</span>
         </Menu.Item>
       </Menu>
     );
