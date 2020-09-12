@@ -1,4 +1,4 @@
-@import '~antd/dist/antd.css';
+@import "~antd/dist/antd.css";
 
 .App__alert {
   position: absolute;
@@ -12,9 +12,8 @@
 }
 
 .App__content {
-  height: 100vh;
   padding-top: 69px;
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh - 70px);
   flex-direction: column;
   display: flex;
   justify-content: center;

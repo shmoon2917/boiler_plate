@@ -1,10 +1,29 @@
-import React from "react";
-import { Typography, Button, Form, Input } from "antd";
-import { Formik, yupToFormErrors } from "formik";
+// import lib
+import React, { useMemo, useState } from "react";
+import { Typography, Button, Form, Input, Select } from "antd";
+import { Formik } from "formik";
 import * as Yup from "yup";
+
+// import component
+import Wrapper from "./Wrapper";
+import FileUpload from "../../../_components/FileUpload";
+
+const { Option } = Select;
 const { Title } = Typography;
 const { TextArea } = Input;
 
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 24 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 24 },
+  },
+};
+
+// constant values
 const Continents = [
   { key: 1, value: "Africa" },
   { key: 2, value: "Europe" },
@@ -15,24 +34,40 @@ const Continents = [
 ];
 
 export default function UploadProductPage() {
-  const onSubmitForm = (values) => {
-    console.log("submit", values);
+  const [Continent, setContinent] = useState(1);
+  const initialValues = {
+    title: "",
+    description: "",
+    price: "",
   };
+
+  const validationSchema = Yup.object().shape({
+    title: Yup.string().required("Title is Required"),
+    description: Yup.string().required("Description is Required"),
+    price: Yup.number().required("price is Required"),
+  });
+
+  const onChangeContinent = (value) => {
+    setContinent(value);
+  };
+
+  const onSubmitForm = (values, { setSubmitting }) => {
+    console.log("submit", values);
+
+    setSubmitting(false);
+  };
+
   return (
-    <div style={{ minWidth: "700px", margin: "2rem auto" }}>
+    <Wrapper>
       <Formik
-        initialValues={{ title: "", description: "", price: "", continent: 0 }}
-        validationSchema={Yup.object().shape({
-          title: Yup.string().required("Title is Required"),
-          description: Yup.string().required("Description is Required"),
-          price: Yup.number().required("price is Required"),
-          continent: Yup.number().required("Continent is Required"),
-        })}
+        initialValues={initialValues}
+        validationSchema={validationSchema}
         onSubmit={onSubmitForm}
       >
         {(props) => {
           const {
             values,
+
             touched,
             errors,
             isSubmitting,
@@ -45,8 +80,10 @@ export default function UploadProductPage() {
               <div style={{ textAlign: "center", marginBottom: "2rem" }}>
                 <Title level={2}>여행 상품 업로드</Title>
               </div>
-              <Form onSubmit={handleSubmit}>
-                <Form.Item required label="Title">
+              <Form onSubmit={handleSubmit} {...formItemLayout}>
+                <FileUpload />
+                <br /> <br />
+                <Form.Item required label="Title" labelAlign="left">
                   <Input
                     id="title"
                     placeholder="Enter product title"
@@ -64,7 +101,7 @@ export default function UploadProductPage() {
                     <div className="input-feedback">{errors.title}</div>
                   )}
                 </Form.Item>
-                <Form.Item required label="Description">
+                <Form.Item required label="Description" labelAlign="left">
                   <TextArea
                     id="description"
                     placeholder="Enter product description"
@@ -81,7 +118,7 @@ export default function UploadProductPage() {
                     <div className="input-feedback">{errors.textArea}</div>
                   )}
                 </Form.Item>
-                <Form.Item required label="Price">
+                <Form.Item required label="Price" labelAlign="left">
                   <Input
                     id="price"
                     placeholder="Enter product price"
@@ -95,27 +132,31 @@ export default function UploadProductPage() {
                         : "text-input"
                     }
                   />
-                  <select onChange={handleChange} value={values.continent}>
-                    {Continents.map((con) => (
-                      <option key={con.key} value={con.value}>
-                        {con.value}
-                      </option>
+                  <br />
+                  <br />
+                  <Select onChange={onChangeContinent} value={Continent}>
+                    {Continents.map((item) => (
+                      <Option key={item.key} value={item.key}>
+                        {item.value}
+                      </Option>
                     ))}
-                  </select>
+                  </Select>
                 </Form.Item>
-                <Button
-                  onSubmit={handleSubmit}
-                  type="primary"
-                  disabled={isSubmitting}
-                  style={{ minWidth: "100%" }}
-                >
-                  확인
-                </Button>
+                <Form.Item>
+                  <Button
+                    onClick={handleSubmit}
+                    type="primary"
+                    disabled={isSubmitting}
+                    style={{ minWidth: "100%" }}
+                  >
+                    확인
+                  </Button>
+                </Form.Item>
               </Form>
             </>
           );
         }}
       </Formik>
-    </div>
+    </Wrapper>
   );
 }
