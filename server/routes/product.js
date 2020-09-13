@@ -48,7 +48,9 @@ router.post("/", (req, res) => {
     if (err) {
       return res.status(400).json({
         status: "error",
-        data: {},
+        data: {
+          err,
+        },
         message: "상품 정보 등록에 실패했습니다.",
         error: "user-0004",
       });
@@ -56,9 +58,7 @@ router.post("/", (req, res) => {
 
     return res.status(200).json({
       status: "ok",
-      data: {
-        success: true,
-      },
+      data: {},
       message: "상품 정보 등록에 성공하였습니다",
       error: "",
     });

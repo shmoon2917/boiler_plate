@@ -2,6 +2,8 @@
 
 새롭게 배운 내용들을 작성한 문서입니다.
 
+## xs(>0) / sm(>=576px) md(>=768px) / lg(>=992px) / xl(>=1200px)
+
 ## AntD with Styled components
 
 - https://www.newline.co/courses/tinyhouse-react-masterclass/lesson_9.2-styling-with-ant-design

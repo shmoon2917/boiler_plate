@@ -9,7 +9,7 @@ export const LeftMenu = ({ mode, current, onChange }) => {
   return (
     <Menu onClick={onChange} selectedKeys={[current]} mode={mode}>
       <Menu.Item key="home">
-        <Link href="/">Home</Link>
+        <Link to="/">Home</Link>
       </Menu.Item>
       <SubMenu title={<span>Blogs</span>}>
         <MenuItemGroup title="Item 1">

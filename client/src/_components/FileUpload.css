@@ -1,0 +1,41 @@
+.FileUpload {
+  width: 100%;
+  display: flex;
+}
+
+.FileUpload__dropzone {
+  flex-grow: 1;
+  width: 33%;
+  /* height: 240px; */
+  border: 1px solid lightgray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.FileUpload__displayzone {
+  flex-grow: 2;
+  width: 66%;
+  display: flex;
+  /* width: 350px; */
+  height: 240px;
+  overflow-x: scroll;
+}
+
+.FileUpload__image {
+  /* min-width: 300px;
+  width: 300px; */
+  height: 240px;
+}
+
+@media (max-width: 767px) {
+  .FileUpload {
+    flex-direction: column;
+  }
+
+  .FileUpload__dropzone,
+  .FileUpload__displayzone {
+    width: 100%;
+    height: 240px;
+  }
+}
