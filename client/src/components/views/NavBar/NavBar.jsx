@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Drawer, Button } from "antd";
 import { AlignRightOutlined } from "@ant-design/icons";
 import { LeftMenu } from "./Sections/LeftMenu";
 import { RightMenu } from "./Sections/RightMenu";
 import "./Sections/NavBar.css";
+import { history } from "../../../_helpers/history";
 
 const NavBar = () => {
   const [visible, setVisible] = useState(false);

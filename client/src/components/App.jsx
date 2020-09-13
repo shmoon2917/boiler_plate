@@ -19,9 +19,9 @@ import NavBar from "./views/NavBar";
 const App = () => {
   const alert = useSelector((state) => state.alert);
   const dispatch = useDispatch();
-
+  let timeout;
   const onCloseAlert = () => {
-    setTimeout(() => dispatch(alertActions.clear()), 300);
+    timeout = setTimeout(() => dispatch(alertActions.clear()), 300);
   };
 
   useEffect(() => {
@@ -29,6 +29,9 @@ const App = () => {
     if (user) {
       dispatch(userActions.checkUserIsLoggedIn(user));
     }
+    return () => {
+      clearTimeout(timeout);
+    };
     // eslint-disable-next-line
   }, []);
 

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
-
+const { Product } = require("..//models/Product");
 //=================================
 //            Product
 //=================================
@@ -36,6 +36,30 @@ router.post("/image", (req, res) => {
         fileName: res.req.file.filename,
       },
       message: "파일 저장에 성공했습니다",
+      error: "",
+    });
+  });
+});
+
+router.post("/", (req, res) => {
+  // 받아온 정보 db에 저장
+  const product = new Product(req.body);
+  product.save((err, productInfo) => {
+    if (err) {
+      return res.status(400).json({
+        status: "error",
+        data: {},
+        message: "상품 정보 등록에 실패했습니다.",
+        error: "user-0004",
+      });
+    }
+
+    return res.status(200).json({
+      status: "ok",
+      data: {
+        success: true,
+      },
+      message: "상품 정보 등록에 성공하였습니다",
       error: "",
     });
   });

@@ -1,12 +1,14 @@
 // import lib
-import React, { useMemo, useState } from "react";
+import React, { useSelector, useState } from "react";
 import { Typography, Button, Form, Input, Select } from "antd";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { asyncState } from "../../../_lib/reducerUtils";
 
 // import component
 import Wrapper from "./Wrapper";
 import FileUpload from "../../../_components/FileUpload";
+import Axios from "axios";
 
 const { Option } = Select;
 const { Title } = Typography;
@@ -33,8 +35,13 @@ const Continents = [
   { key: 6, value: "Australia" },
 ];
 
-export default function UploadProductPage() {
+export default function UploadProductPage({ user, history }) {
+  // const user =
+  //   useSelector((state) => state.user.login.data) || asyncState.initial().data;
+
+  // console.log(user);
   const [Continent, setContinent] = useState(1);
+  const [Images, setImages] = useState([]);
   const initialValues = {
     title: "",
     description: "",
@@ -51,10 +58,31 @@ export default function UploadProductPage() {
     setContinent(value);
   };
 
-  const onSubmitForm = (values, { setSubmitting }) => {
-    console.log("submit", values);
+  const updateImages = (newImages) => {
+    setImages(newImages);
+  };
 
-    setSubmitting(false);
+  const onSubmitForm = async (values, { setSubmitting }) => {
+    const { title, description, price } = values;
+
+    const body = {
+      writer: user._id,
+      title,
+      description,
+      price,
+      images: Images,
+      continent: Continent,
+    };
+
+    const response = await Axios.post("/api/product");
+    if (response.data.data.success) {
+      alert("상품 업로드 성공");
+      setSubmitting(false);
+      history.push("/");
+    } else {
+      setSubmitting(false);
+      alert("상품 업로드 실패");
+    }
   };
 
   return (
@@ -67,7 +95,6 @@ export default function UploadProductPage() {
         {(props) => {
           const {
             values,
-
             touched,
             errors,
             isSubmitting,
@@ -81,7 +108,7 @@ export default function UploadProductPage() {
                 <Title level={2}>여행 상품 업로드</Title>
               </div>
               <Form onSubmit={handleSubmit} {...formItemLayout}>
-                <FileUpload />
+                <FileUpload refreshFunction={updateImages} />
                 <br /> <br />
                 <Form.Item required label="Title" labelAlign="left">
                   <Input
@@ -115,7 +142,7 @@ export default function UploadProductPage() {
                     }
                   />
                   {errors.description && touched.description && (
-                    <div className="input-feedback">{errors.textArea}</div>
+                    <div className="input-feedback">{errors.description}</div>
                   )}
                 </Form.Item>
                 <Form.Item required label="Price" labelAlign="left">
@@ -132,6 +159,9 @@ export default function UploadProductPage() {
                         : "text-input"
                     }
                   />
+                  {errors.price && touched.price && (
+                    <div className="input-feedback">{errors.price}</div>
+                  )}
                   <br />
                   <br />
                   <Select onChange={onChangeContinent} value={Continent}>

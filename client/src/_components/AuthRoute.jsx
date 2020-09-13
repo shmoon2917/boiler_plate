@@ -12,7 +12,7 @@ import AuthService from "../_services/auth.service";
 */
 export const AuthRoute = ({ component: Component, type, ...rest }) => {
   const user =
-    useSelector((state) => state.user.login.data) || asyncState.initial();
+    useSelector((state) => state.user.login.data) || asyncState.initial().data;
 
   console.log("authRoute", user);
 
@@ -31,10 +31,10 @@ export const AuthRoute = ({ component: Component, type, ...rest }) => {
           if (type === "noNeedAfterLogin") {
             return <Redirect to="/" />;
           } else if (type === "admin") {
-            if (user.roles === "1") return <Component {...props} />;
+            if (user.roles === "1") return <Component {...props} user={user} />;
             else return <Redirect to="/" />;
           } else {
-            return <Component {...props} />;
+            return <Component {...props} user={user} />;
           }
         }
       }}

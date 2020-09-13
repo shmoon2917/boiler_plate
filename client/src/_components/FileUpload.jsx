@@ -3,7 +3,7 @@ import Dropzone from "react-dropzone";
 import { PlusOutlined } from "@ant-design/icons";
 import axios from "axios";
 
-export default function FileUpload() {
+export default function FileUpload({ refreshFunction }) {
   const [Images, setImages] = useState([]);
 
   const onDropImage = async (files) => {
@@ -20,10 +20,18 @@ export default function FileUpload() {
       console.log(response);
       const imageInfo = response.data.data;
       setImages([...Images, imageInfo.filePath]);
+      refreshFunction([...Images, imageInfo.filePath]);
     } else {
       console.log(response);
       alert("파일을 저장하는 데 실패했습니다");
     }
+  };
+
+  const onDeleteImage = (image) => (e) => {
+    const currentIndex = Images.indexOf(image);
+    setImages((prevImages) =>
+      prevImages.filter((_img, index) => index !== currentIndex)
+    );
   };
   return (
     <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -54,11 +62,12 @@ export default function FileUpload() {
         }}
       >
         {Images.map((image, index) => (
-          <img
-            key={index}
-            style={{ minWidth: "300px", width: "300px", height: "240px" }}
-            src={`http://localhost:5000/${image}`}
-          />
+          <div onClick={onDeleteImage(image)} key={index}>
+            <img
+              style={{ minWidth: "300px", width: "300px", height: "240px" }}
+              src={`http://localhost:5000/${image}`}
+            />
+          </div>
         ))}
       </div>
     </div>
