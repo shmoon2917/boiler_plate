@@ -1,11 +1,11 @@
 import "./App.css";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { history } from "../_helpers";
 import { AuthRoute } from "../_components/AuthRoute";
 import { alertActions } from "../_modules/alert";
-import { Alert } from "antd";
+import { Alert, Layout } from "antd";
 import AuthService from "../_services/auth.service";
 import { userActions } from "../_modules/user";
 
@@ -16,10 +16,13 @@ import RegisterPage from "./views/RegisterPage";
 import UploadProductPage from "./views/UploadProductPage";
 import NavBar from "./views/NavBar";
 
+const { Header, Content, Footer } = Layout;
+
 const App = () => {
   const alert = useSelector((state) => state.alert);
   const dispatch = useDispatch();
-  let timeout;
+  const timeout = useRef();
+
   const onCloseAlert = () => {
     timeout = setTimeout(() => dispatch(alertActions.clear()), 300);
   };
@@ -36,7 +39,7 @@ const App = () => {
   }, []);
 
   return (
-    <div className="App">
+    <Layout className="App">
       {alert.message && (
         <Alert
           className="App__alert"
@@ -47,11 +50,10 @@ const App = () => {
         />
       )}
       <Router history={history}>
-        <NavBar />
-        <div
-          className="App__content"
-          style={{ paddingTop: "69px", minheight: "calc(100vh -80px)" }}
-        >
+        <Header className="App__header">
+          <NavBar />
+        </Header>
+        <Content className="App__content">
           <Switch>
             <Route exact path="/" component={LandingPage} />
             <Route path="/login" component={LoginPage} />
@@ -59,9 +61,12 @@ const App = () => {
             <AuthRoute path="/product/upload" component={UploadProductPage} />
             <Redirect from="*" to="/" />
           </Switch>
-        </div>
+        </Content>
       </Router>
-    </div>
+      <Footer className="App__footer">
+        Shop App ©2020 Created by Sangho Moon
+      </Footer>
+    </Layout>
   );
 };
 

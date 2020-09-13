@@ -1,13 +1,31 @@
-import React, { useEffect, useState } from "react";
+// import css
+import "./Sections/NavBar.css";
+
+// import lib and utils
+import React, { useEffect, useRef, useState } from "react";
 import { Drawer, Button } from "antd";
-import { AlignRightOutlined } from "@ant-design/icons";
+import { AlignRightOutlined, HomeFilled } from "@ant-design/icons";
+import { history } from "../../../_helpers/history";
+
+// import components
 import { LeftMenu } from "./Sections/LeftMenu";
 import { RightMenu } from "./Sections/RightMenu";
-import "./Sections/NavBar.css";
-import { history } from "../../../_helpers/history";
 
 const NavBar = () => {
   const [visible, setVisible] = useState(false);
+  const [current, setCurrent] = useState("");
+  let unListenHistory = useRef();
+
+  useEffect(() => {
+    unListenHistory = history.listen((location) => {
+      if (location.pathname === "/") {
+        setCurrent("");
+      }
+    });
+    return () => {
+      unListenHistory();
+    };
+  }, []);
 
   const showDrawer = () => {
     setVisible(true);
@@ -17,21 +35,34 @@ const NavBar = () => {
     setVisible(false);
   };
 
+  const onChangeCurrentTab = (e) => {
+    console.log(e);
+    setCurrent(e.key);
+  };
+
   return (
     <>
-      <nav
-        className="menu"
-        style={{ position: "fixed", zIndex: 5, width: "100%" }}
-      >
+      <nav className="menu">
         <div className="menu__logo">
-          <a href="/">Logo</a>
+          <a href="/">
+            <HomeFilled />
+            <span>Home</span>
+          </a>
         </div>
         <div className="menu__container">
           <div className="menu__left">
-            <LeftMenu mode="horizontal" />
+            <LeftMenu
+              mode="horizontal"
+              current={current}
+              onChange={onChangeCurrentTab}
+            />
           </div>
           <div className="menu__right">
-            <RightMenu mode="horizontal" />
+            <RightMenu
+              mode="horizontal"
+              current={current}
+              onChange={onChangeCurrentTab}
+            />
           </div>
           <Button
             className="menu__mobile-button"

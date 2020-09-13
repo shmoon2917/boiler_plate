@@ -1,31 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { Menu } from "antd";
+// import libs and utils
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { Menu } from "antd";
 import { logoutUserThunk } from "../../../../_modules/user";
 import { asyncState } from "../../../../_lib/reducerUtils";
-import { Link } from "react-router-dom";
-import { history } from "../../../../_helpers/history";
 
-export const RightMenu = (props) => {
-  const { data: user } =
-    useSelector((state) => state.user.login) || asyncState.initial();
-  const [current, setCurrent] = useState("");
+export const RightMenu = ({ mode, current, onChange }) => {
+  const user =
+    useSelector((state) => state.user.login.data) || asyncState.initial().data;
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    history.listen((location) => {
-      if (location.pathname === "/" && current === "upload") {
-        setCurrent("");
-      }
-    });
-  }, []);
-
-  const onClickTab = (e) => {
-    setCurrent(e.key);
-    if (current === "upload") {
-      console.log(props);
-    }
-  };
 
   const onLogoutHandler = () => {
     const from = { from: { pathname: "/" } };
@@ -34,7 +18,7 @@ export const RightMenu = (props) => {
 
   if (!user) {
     return (
-      <Menu mode={props.mode}>
+      <Menu onClick={onChange} selectedKeys={[current]} mode={mode}>
         <Menu.Item key="mail">
           <Link to="/login">Sign In</Link>
         </Menu.Item>
@@ -45,10 +29,9 @@ export const RightMenu = (props) => {
     );
   } else {
     return (
-      <Menu selectedKeys={[current]} mode={props.mode}>
+      <Menu onClick={onChange} selectedKeys={[current]} mode={mode}>
         <Menu.Item key="upload">
           <Link to="/product/upload">Upload</Link>
-          {/* <span>Upload</span> */}
         </Menu.Item>
         <Menu.Item key="logout">
           <span onClick={onLogoutHandler}>Logout</span>

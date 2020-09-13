@@ -1,14 +1,15 @@
-import React from 'react';
-import { Menu } from 'antd';
+import React from "react";
+import { Menu } from "antd";
+import { Link } from "react-router-dom";
 
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
-export const LeftMenu = (props) => {
+export const LeftMenu = ({ mode, current, onChange }) => {
   return (
-    <Menu mode={props.mode}>
-      <Menu.Item key="mail">
-        <a href="/">Home</a>
+    <Menu onClick={onChange} selectedKeys={[current]} mode={mode}>
+      <Menu.Item key="home">
+        <Link href="/">Home</Link>
       </Menu.Item>
       <SubMenu title={<span>Blogs</span>}>
         <MenuItemGroup title="Item 1">

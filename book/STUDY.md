@@ -42,3 +42,7 @@ https://code-maze.com/react-net-core-error-handling/ ( 9/11)
 ## Antd With raw css
 
 https://stackoverflow.com/questions/52283040/override-antds-selected-item-color/52283093
+
+## Listening History (Router 변경 감지)
+
+https://www.it-swarm.dev/ko/reactjs/%EB%B0%98%EC%9D%91-%EB%9D%BC%EC%9A%B0%ED%84%B0%EB%A1%9C-%EA%B2%BD%EB%A1%9C-%EB%B3%80%EA%B2%BD-%EA%B0%90%EC%A7%80/833161534/

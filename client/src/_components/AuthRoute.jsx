@@ -12,7 +12,8 @@ import AuthService from "../_services/auth.service";
 */
 export const AuthRoute = ({ component: Component, type, ...rest }) => {
   const user =
-    useSelector((state) => state.user.login.data) || asyncState.initial().data;
+    useSelector((state) => state.user.login.data) ||
+    AuthService.getCurrentUser();
 
   console.log("authRoute", user);
 

@@ -6,6 +6,9 @@
   overflow: auto;
   box-shadow: 0 0 30px #f3f1f1;
   background-color: white;
+  position: fixed;
+  z-index: 5;
+  width: 100%;
 }
 
 .menu__logo {
@@ -14,15 +17,39 @@
 }
 
 .menu__logo a {
-  display: inline-block;
-  font-size: 20px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   padding: 19px 20px;
+  font-size: 20px;
+}
+
+.menu__logo a > span:last-child {
+  margin-left: 10px;
+}
+
+.menu__container .ant-menu-horizontal {
+  border-bottom: none !important;
+}
+
+.menu__container .menu__left {
+  float: left;
+  line-height: 46px;
+}
+
+.menu__container .menu__right {
+  float: right;
+  line-height: 46px;
 }
 
 .menu__container .ant-menu-item {
   padding: 10px 5px !important;
   margin-left: 0px !important;
   margin-right: 0px !important;
+}
+
+.menu__container .ant-menu-submenu {
+  margin: 0 !important;
 }
 
 .menu__container .ant-menu-submenu-title {
@@ -33,18 +60,6 @@
 .menu__container .ant-menu-item span,
 .menu__container .ant-menu-submenu-title a {
   padding: 10px 15px !important;
-}
-
-.menu__container .ant-menu-horizontal {
-  border-bottom: none !important;
-}
-
-.menu__container .menu__left {
-  float: left;
-}
-
-.menu__container .menu__right {
-  float: right;
 }
 
 .menu__mobile-button {
@@ -77,14 +92,11 @@
 
   .menu__logo a {
     margin-left: -20px;
+    padding: 10px 20px;
   }
 
   .menu__container .ant-menu-item,
   .menu__container .ant-menu-submenu-title {
     padding: 1px 20px;
-  }
-
-  .menu__logo a {
-    padding: 10px 20px;
   }
 }
