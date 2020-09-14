@@ -3,38 +3,25 @@ import "./UploadProductPage.css";
 // import lib
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Typography, Button, Form, Input, Select, Row, Col } from "antd";
+import { Typography, Button, Form, Input, Select } from "antd";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import ProductService from "../../../_services/product.service";
 import { alertThunk } from "../../../_modules/alert";
 
 // import component
-import div from "./Wrapper";
 import FileUpload from "../../../_components/FileUpload";
-import Axios from "axios";
 
 const { Option } = Select;
 const { Title } = Typography;
 const { TextArea } = Input;
 
-const wrapperLayout = {
-  xs: { offset: 1, span: 22 },
-  sm: { offset: 2, span: 20 },
-  md: { offset: 3, span: 18 },
-  lg: { offset: 5, span: 14 },
-};
-
 const formItemLayout = {
   labelCol: {
-    xs: { span: 24 },
-    sm: { span: 24 },
-    md: { span: 24 },
+    span: 24,
   },
   wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 24 },
-    md: { span: 24 },
+    span: 24,
   },
 };
 
@@ -96,127 +83,125 @@ export default function UploadProductPage({ user, history }) {
   };
 
   return (
-    <Row className="layout__row">
-      <Col {...wrapperLayout} className="layout__col">
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={onSubmitForm}
-        >
-          {(props) => {
-            const {
-              values,
-              touched,
-              errors,
-              isSubmitting,
-              handleChange,
-              handleBlur,
-              handleSubmit,
-            } = props;
-            return (
-              <>
-                <div className="UploadPage__title">
-                  <Title level={2}>여행 상품 업로드</Title>
-                </div>
-                <Form
-                  className="UploadPage__form"
-                  onSubmit={handleSubmit}
-                  {...formItemLayout}
+    <div className="pageWrapper">
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={onSubmitForm}
+      >
+        {(props) => {
+          const {
+            values,
+            touched,
+            errors,
+            isSubmitting,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+          } = props;
+          return (
+            <>
+              <div className="pageTitle">
+                <Title level={2}>여행 상품 업로드</Title>
+              </div>
+              <Form
+                className="pageForm"
+                onSubmit={handleSubmit}
+                {...formItemLayout}
+              >
+                <FileUpload refreshFunction={onUpdateImages} />
+                <Form.Item
+                  className="pageForm__Item"
+                  required
+                  label="Title"
+                  labelAlign="left"
                 >
-                  <FileUpload refreshFunction={onUpdateImages} />
-                  <Form.Item
-                    className="UploadPage__formItem"
-                    required
-                    label="Title"
-                    labelAlign="left"
+                  <Input
+                    id="title"
+                    placeholder="Enter product title"
+                    type="text"
+                    value={values.title}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className={
+                      errors.title && touched.title
+                        ? "text-input error"
+                        : "text-input"
+                    }
+                  />
+                  {errors.title && touched.title && (
+                    <div className="input-feedback">{errors.title}</div>
+                  )}
+                </Form.Item>
+                <Form.Item
+                  className="pageForm__Item"
+                  required
+                  label="Description"
+                  labelAlign="left"
+                >
+                  <TextArea
+                    id="description"
+                    placeholder="Enter product description"
+                    value={values.description}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className={
+                      errors.description && touched.description
+                        ? "text-input error"
+                        : "text-input"
+                    }
+                  />
+                  {errors.description && touched.description && (
+                    <div className="input-feedback">{errors.description}</div>
+                  )}
+                </Form.Item>
+                <Form.Item
+                  className="pageForm__Item"
+                  required
+                  label="Price"
+                  labelAlign="left"
+                >
+                  <Input
+                    id="price"
+                    placeholder="Enter product price"
+                    type="number"
+                    value={values.price}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className={
+                      errors.price && touched.price
+                        ? "text-input error"
+                        : "text-input"
+                    }
+                  />
+                  {errors.price && touched.price && (
+                    <div className="input-feedback">{errors.price}</div>
+                  )}
+                  <br />
+                  <br />
+                  <Select onChange={onChangeContinent} value={Continent}>
+                    {Continents.map((item) => (
+                      <Option key={item.key} value={item.key}>
+                        {item.value}
+                      </Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+                <Form.Item className="pageForm__Item">
+                  <Button
+                    onClick={handleSubmit}
+                    type="primary"
+                    disabled={isSubmitting}
+                    style={{ minWidth: "100%" }}
                   >
-                    <Input
-                      id="title"
-                      placeholder="Enter product title"
-                      type="text"
-                      value={values.title}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className={
-                        errors.title && touched.title
-                          ? "text-input error"
-                          : "text-input"
-                      }
-                    />
-                    {errors.title && touched.title && (
-                      <div className="input-feedback">{errors.title}</div>
-                    )}
-                  </Form.Item>
-                  <Form.Item
-                    className="UploadPage__formItem"
-                    required
-                    label="Description"
-                    labelAlign="left"
-                  >
-                    <TextArea
-                      id="description"
-                      placeholder="Enter product description"
-                      value={values.description}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className={
-                        errors.description && touched.description
-                          ? "text-input error"
-                          : "text-input"
-                      }
-                    />
-                    {errors.description && touched.description && (
-                      <div className="input-feedback">{errors.description}</div>
-                    )}
-                  </Form.Item>
-                  <Form.Item
-                    className="UploadPage__formItem"
-                    required
-                    label="Price"
-                    labelAlign="left"
-                  >
-                    <Input
-                      id="price"
-                      placeholder="Enter product price"
-                      type="number"
-                      value={values.price}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className={
-                        errors.price && touched.price
-                          ? "text-input error"
-                          : "text-input"
-                      }
-                    />
-                    {errors.price && touched.price && (
-                      <div className="input-feedback">{errors.price}</div>
-                    )}
-                    <br />
-                    <br />
-                    <Select onChange={onChangeContinent} value={Continent}>
-                      {Continents.map((item) => (
-                        <Option key={item.key} value={item.key}>
-                          {item.value}
-                        </Option>
-                      ))}
-                    </Select>
-                  </Form.Item>
-                  <Form.Item className="UploadPage__formItem">
-                    <Button
-                      onClick={handleSubmit}
-                      type="primary"
-                      disabled={isSubmitting}
-                      style={{ minWidth: "100%" }}
-                    >
-                      확인
-                    </Button>
-                  </Form.Item>
-                </Form>
-              </>
-            );
-          }}
-        </Formik>
-      </Col>
-    </Row>
+                    확인
+                  </Button>
+                </Form.Item>
+              </Form>
+            </>
+          );
+        }}
+      </Formik>
+    </div>
   );
 }

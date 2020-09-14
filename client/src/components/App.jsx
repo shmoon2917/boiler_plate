@@ -1,4 +1,7 @@
+// import style
 import "./App.css";
+
+// import libs and utils
 import React, { useEffect, useRef } from "react";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -42,7 +45,7 @@ const App = () => {
     <Layout className="App">
       {alert.message && (
         <Alert
-          className="App__alert"
+          className="alert"
           type={alert.type}
           message={alert.message}
           closable
@@ -50,10 +53,10 @@ const App = () => {
         />
       )}
       <Router history={history}>
-        <Header className="App__header">
+        <Header className="header">
           <NavBar />
         </Header>
-        <Content className="App__content">
+        <Content className="content">
           <Switch>
             <Route exact path="/" component={LandingPage} />
             <Route path="/login" component={LoginPage} />
@@ -63,9 +66,7 @@ const App = () => {
           </Switch>
         </Content>
       </Router>
-      <Footer className="App__footer">
-        Shop App ©2020 Created by Sangho Moon
-      </Footer>
+      <Footer className="footer">Shop App ©2020 Created by Sangho Moon</Footer>
     </Layout>
   );
 };

@@ -5,3 +5,7 @@
 ## formik with antd
 
 - https://github.com/formium/formik/issues/2123
+
+## Open folder in CMD
+
+` start %windir%\explorer.exe “C:\Users\mini\Desktop”`

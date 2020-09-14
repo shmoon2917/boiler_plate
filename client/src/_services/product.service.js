@@ -13,6 +13,17 @@ const registerProduct = async (body) => {
   }
 };
 
+const getProducts = async (body) => {
+  try {
+    const response = await axios.post(`${API_URL}/products`);
+    const products = await handleResponse(response);
+
+    return products;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const handleResponse = (response) => {
   const { status, message, data } = response.data;
 
@@ -26,4 +37,5 @@ const handleResponse = (response) => {
 
 export default {
   registerProduct,
+  getProducts,
 };

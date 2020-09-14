@@ -1,33 +1,82 @@
-.ant-row.layout__row {
-  width: 100%;
+.pageWrapper {
+  margin: 0 auto;
   padding-top: 69px;
 }
 
-.UploadPage__title {
+.pageTitle {
   text-align: center;
   margin-bottom: 2rem;
 }
 
-.UploadPage__formItem {
+.pageForm__Item {
   margin-top: 24px;
 }
 
-@media (max-width: 767px) {
-  .ant-row.layout__row {
+/* 
+  ##Device = Desktops
+  ##Screen = 1281px to higher resolution desktops
+*/
+
+@media (min-width: 1281px) {
+  .pageWrapper {
+    width: 980px;
+  }
+}
+
+/* 
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .pageWrapper {
+    max-width: 880px;
+    width: 80%;
+  }
+}
+
+/* 
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .pageWrapper {
+    width: 650px;
+  }
+}
+
+/* 
+  ##Device = Tablets, Ipads (landscape)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .pageWrapper {
+    width: 650px;
+  }
+}
+
+/* 
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+
+@media (min-width: 481px) and (max-width: 767px) {
+  .pageWrapper {
+    width: 80%;
     padding-top: 52px;
   }
 }
 
-@media (min-width: 992px) {
-  .ant-col.layout__col {
-    max-width: 900px;
-    margin: 0 auto !important;
-  }
-}
+/* 
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
 
-@media (min-width: 1200px) {
-  .ant-col.layout__col {
-    max-width: 980px;
-    margin: 0 auto !important;
+@media (max-width: 480px) {
+  .pageWrapper {
+    width: 85%;
+    padding-top: 37px;
   }
 }
