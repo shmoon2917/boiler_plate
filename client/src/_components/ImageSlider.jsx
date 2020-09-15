@@ -8,7 +8,7 @@ function ImageSlider({ images }) {
           return (
             <div key={index}>
               <img
-                style={{ width: "100%", maxHeight: "150px" }}
+                // style={{ width: "100%", maxHeight: "150px" }}
                 src={`http://localhost:5000/${image}`}
               />
             </div>

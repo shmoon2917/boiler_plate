@@ -66,3 +66,7 @@ https://www.it-swarm.dev/ko/reactjs/%EB%B0%98%EC%9D%91-%EB%9D%BC%EC%9A%B0%ED%84%
 http://blog.daum.net/creazier/15310525
 
 https://jeonghwan-kim.github.io/%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%97%85%EB%A1%9C%EB%93%9C-1-multer-%EB%AA%A8%EB%93%88%EB%A1%9C-%ED%8C%8C%EC%9D%BC-%EC%97%85%EB%A1%9C%EB%93%9C/
+
+## Image processing
+
+https://blog.logrocket.com/image-processing-with-node-and-jimp/

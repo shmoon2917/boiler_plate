@@ -16,8 +16,8 @@ var storage = multer.diskStorage({
   },
 });
 
-var uploadImageAsync = (req, res) => {
-  var upload = multer({ storage }).single("file");
+const uploadImageAsync = (req, res) => {
+  const upload = multer({ storage }).single("file");
 
   return new Promise((resolve, reject) => {
     upload(req, res, (err) => {
@@ -34,14 +34,22 @@ router.post("/image", async (req, res) => {
   try {
     const file = await uploadImageAsync(req, res);
 
-    const resimseImage = await Jimp.read(`../../uploads/${file.pathname}`);
+    const processImage = await Jimp.read(`uploads/${file.filename}`);
+    await processImage
+      .resize(500, Jimp.AUTO)
+      .crop(0, 0, 300, 200)
+      .quality(60)
+      .writeAsync(`uploads/sm-${file.filename}`);
+
+    const modifiedFileName = `sm-${file.filename}`;
+    const modifiedPath = `uploads\\${modifiedFileName}`;
 
     return res.status(200).json({
       status: "ok",
       data: {
         success: true,
-        filePath: file.path,
-        fileName: file.filename,
+        filePath: modifiedPath,
+        fileName: modifiedFileName,
       },
       message: "파일 저장에 성공했습니다",
       error: "",
@@ -81,13 +89,31 @@ router.post("/", (req, res) => {
 });
 
 router.post("/products", async (req, res) => {
+  let limit = req.body.limit ? parseInt(req.body.limit, 10) : 20;
+  let skip = req.body.skip ? parseInt(req.body.skip, 10) : 0;
+
+  let findArgs = {};
+  for (let key in req.body.filters) {
+    if (req.body.filters[key].length > 0) {
+      findArgs[key] = req.body.filters[key];
+    }
+  }
+
+  console.log("findArgs", findArgs);
+
   // product collection 에 들어 있는 모든 상품 정보 가져오기
   try {
-    const productsInfo = await Product.find().populate("writer").exec();
+    const productsInfo = await Product.find(findArgs)
+      .populate("writer")
+      .skip(skip)
+      .limit(limit)
+      .exec();
+
+    console.log("length", productsInfo.length);
 
     return res.status(200).json({
       status: "ok",
-      data: productsInfo,
+      data: { productsInfo, postSize: productsInfo.length },
       message: "상품 정보 가져오는 데 성공했습니다",
       error: "",
     });

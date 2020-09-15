@@ -15,10 +15,10 @@ const registerProduct = async (body) => {
 
 const getProducts = async (body) => {
   try {
-    const response = await axios.post(`${API_URL}/products`);
-    const products = await handleResponse(response);
+    const response = await axios.post(`${API_URL}/products`, body);
+    const data = await handleResponse(response);
 
-    return products;
+    return data;
   } catch (error) {
     throw error;
   }
