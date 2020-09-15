@@ -77,8 +77,6 @@ const LandingPage = () => {
 
     setFilters(newFilters);
 
-    console.log("onHandleFil", newFilters);
-
     showFilteredResults(newFilters);
   };
 
