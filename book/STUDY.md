@@ -70,3 +70,11 @@ https://jeonghwan-kim.github.io/%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%97%85%EB%A1%9C%E
 ## Image processing
 
 https://blog.logrocket.com/image-processing-with-node-and-jimp/
+
+## JS event bubbling and capturing
+
+https://blueshw.github.io/2018/04/23/event-bubbling-capturing/
+
+## JS로 HTML 요소 순회하기
+
+https://blog.eunsatio.io/develop/Javascript%EB%A1%9C-HTML-%EC%9A%94%EC%86%8C-%EC%88%9C%ED%9A%8C%ED%95%98%EA%B8%B0

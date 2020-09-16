@@ -1,9 +1,22 @@
 import "./ImageSlider.css";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Carousel } from "antd";
 import { history } from "../_helpers/history";
 
-function ImageSlider({ images, id }) {
+function ImageSlider({ images, id, bubbling }) {
+  const carousel = useRef();
+
+  useEffect(() => {
+    const buttons = carousel.current.getElementsByTagName("button");
+    Array.from(buttons).forEach((button) => {
+      button.addEventListener("click", onClickDot);
+    });
+  }, []);
+
+  const onClickDot = () => {
+    console.log("dot");
+  };
+
   // const Arrow = ({ type, style, className, onClick }) => (
   //   <ArrowRightOutlined
   //   type={type}
@@ -13,13 +26,15 @@ function ImageSlider({ images, id }) {
   // />
   // );
   const onClickProduct = (e) => {
-    history.push(`product/${id}`);
+    console.log("image");
+    // history.push(`product/${id}`);
   };
 
   return (
-    <div className="carouselWrapper">
+    <div className="carouselWrapper" ref={carousel}>
       <Carousel
         autoplay
+
         // arrows
         // nextArrow={<Arrow type="right" />}
         // prevArrow={<Arrow type="left" />}

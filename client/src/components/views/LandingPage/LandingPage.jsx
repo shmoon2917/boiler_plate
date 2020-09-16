@@ -118,6 +118,11 @@ const LandingPage = ({ history }) => {
     getProducts(body);
   };
 
+  const onClickProduct = (product) => (e) => {
+    console.log("card");
+    // history.push(`product/${product._id}`);
+  };
+
   return (
     <div className="pageWrapper">
       <div className="title">
@@ -165,6 +170,7 @@ const LandingPage = ({ history }) => {
                 className="productList__row"
               >
                 <Card
+                  onClick={onClickProduct(product)}
                   className="productList__item"
                   hoverable
                   cover={
