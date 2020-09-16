@@ -3,7 +3,7 @@ import { Collapse, Checkbox } from "antd";
 
 const { Panel } = Collapse;
 
-function CheckBox({ list, handleFilters }) {
+export function CheckBox({ list, handleFilters }) {
   const [Checked, setChecked] = useState([]);
   const isFirstRendered = useRef(true);
 
@@ -47,10 +47,8 @@ function CheckBox({ list, handleFilters }) {
     ));
 
   return (
-    <Collapse className="collapse" style={{ margin: "2rem auto" }}>
+    <Collapse className="collapse" style={{ margin: "1rem auto" }}>
       <Panel header="continents">{renderCheckboxLists()}</Panel>
     </Collapse>
   );
 }
-
-export default CheckBox;

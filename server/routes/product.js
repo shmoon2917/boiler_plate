@@ -91,25 +91,38 @@ router.post("/", (req, res) => {
 router.post("/products", async (req, res) => {
   let limit = req.body.limit ? parseInt(req.body.limit, 10) : 20;
   let skip = req.body.skip ? parseInt(req.body.skip, 10) : 0;
+  let term = req.body.searchTerm;
 
   let findArgs = {};
   for (let key in req.body.filters) {
     if (req.body.filters[key].length > 0) {
-      findArgs[key] = req.body.filters[key];
+      if (key === "price") {
+        findArgs[key] = {
+          $gte: req.body.filters[key][0],
+          $lte: req.body.filters[key][1],
+        };
+      } else {
+        findArgs[key] = req.body.filters[key];
+      }
     }
   }
 
-  console.log("findArgs", findArgs);
-
-  // product collection 에 들어 있는 모든 상품 정보 가져오기
   try {
-    const productsInfo = await Product.find(findArgs)
-      .populate("writer")
-      .skip(skip)
-      .limit(limit)
-      .exec();
-
-    console.log("length", productsInfo.length);
+    let productsInfo;
+    if (term) {
+      productsInfo = await Product.find(findArgs)
+        .find({ $text: { $search: term } })
+        .populate("writer")
+        .skip(skip)
+        .limit(limit)
+        .exec();
+    } else {
+      productsInfo = await Product.find(findArgs)
+        .populate("writer")
+        .skip(skip)
+        .limit(limit)
+        .exec();
+    }
 
     return res.status(200).json({
       status: "ok",
@@ -117,7 +130,7 @@ router.post("/products", async (req, res) => {
       message: "상품 정보 가져오는 데 성공했습니다",
       error: "",
     });
-  } catch (err) {
+  } catch (e) {
     return res.status(400).json({
       status: "error",
       data: err,

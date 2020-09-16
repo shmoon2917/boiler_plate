@@ -15,8 +15,6 @@ export const AuthRoute = ({ component: Component, type, ...rest }) => {
     useSelector((state) => state.user.login.data) ||
     AuthService.getCurrentUser();
 
-  console.log("authRoute", user);
-
   return (
     <Route
       {...rest}

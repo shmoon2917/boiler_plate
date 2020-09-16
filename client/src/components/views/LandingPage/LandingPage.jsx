@@ -9,8 +9,14 @@ import { RocketFilled } from "@ant-design/icons";
 import ProductService from "../../../_services/product.service";
 import { alertThunk } from "../../../_modules/alert";
 import ImageSlider from "../../../_components/ImageSlider";
-import CheckBox from "./Sections/CheckBox";
-import { continents } from "./Sections/Datas";
+import {
+  CheckBox,
+  RadioBox,
+  SearchFeature,
+  continents,
+  price,
+} from "./Sections";
+import { set } from "mongoose";
 const { Meta } = Card;
 
 const LandingPage = () => {
@@ -22,6 +28,7 @@ const LandingPage = () => {
     continent: [],
     price: [],
   });
+  const [SearchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -62,11 +69,23 @@ const LandingPage = () => {
     getProducts(body);
   };
 
+  const handlePrice = (value) => {
+    const priceData = price;
+    const array = priceData.find((data) => data._id === parseInt(value, 10))
+      .array;
+
+    return array;
+  };
+
   const onHandleFilters = (category) => (filters) => {
-    const handledFilters = {
-      ...Filters,
-      [category]: filters,
-    };
+    const handledFilters = { ...Filters };
+
+    if (category === "price") {
+      let priceValues = handlePrice(filters);
+      handledFilters[category] = priceValues;
+    } else {
+      handledFilters[category] = filters;
+    }
 
     setFilters(handledFilters);
 
@@ -81,6 +100,19 @@ const LandingPage = () => {
     };
 
     setSkip(0);
+    getProducts(body);
+  };
+
+  const onUpdateSearchTerm = (updatedTerm) => {
+    let body = {
+      skip: 0,
+      limit: Limit,
+      filters: Filters,
+      searchTerm: updatedTerm,
+    };
+
+    setSkip(0);
+    setSearchTerm(updatedTerm);
     getProducts(body);
   };
 
@@ -101,9 +133,24 @@ const LandingPage = () => {
           />
         </Col>
         <Col lg={12} md={12} sm={24}>
-          hello
+          <RadioBox
+            className="filter"
+            list={price}
+            handleFilters={onHandleFilters("price")}
+          />
         </Col>
       </Row>
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          margin: "1rem auto",
+        }}
+      >
+        <SearchFeature handleSearchFilter={onUpdateSearchTerm} />
+      </div>
+
       <Row gutter={[16, 16]} className="productList">
         {Products &&
           Products.map((product, index) => {

@@ -36,7 +36,6 @@ const NavBar = () => {
   };
 
   const onChangeCurrentTab = (e) => {
-    console.log(e);
     setCurrent(e.key);
   };
 
