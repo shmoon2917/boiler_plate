@@ -17,6 +17,7 @@ import LandingPage from "./views/LandingPage";
 import LoginPage from "./views/LoginPage";
 import RegisterPage from "./views/RegisterPage";
 import UploadProductPage from "./views/UploadProductPage";
+import DetailPage from "./views/DetailPage/DetailPage";
 import NavBar from "./views/NavBar";
 
 const { Header, Content, Footer } = Layout;
@@ -61,6 +62,7 @@ const App = () => {
             <Route exact path="/" component={LandingPage} />
             <Route path="/login" component={LoginPage} />
             <Route path="/register" component={RegisterPage} />
+            <Route path="/product/:id" component={DetailPage} />
             <AuthRoute path="/product/upload" component={UploadProductPage} />
             <Redirect from="*" to="/" />
           </Switch>

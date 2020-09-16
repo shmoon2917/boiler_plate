@@ -4,7 +4,7 @@ import "./LandingPage.css";
 // import libs and utils
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Card, Col, Row } from "antd";
+import { Card, Col, Row, Button } from "antd";
 import { RocketFilled } from "@ant-design/icons";
 import ProductService from "../../../_services/product.service";
 import { alertThunk } from "../../../_modules/alert";
@@ -16,11 +16,11 @@ import {
   continents,
   price,
 } from "./Sections";
-import { set } from "mongoose";
 const { Meta } = Card;
 
-const LandingPage = () => {
+const LandingPage = ({ history }) => {
   const [Products, setProducts] = useState([]);
+  const [Loading, setLoading] = useState(false);
   const [Skip, setSkip] = useState(0);
   const [Limit, setLimit] = useState(4);
   const [PostSize, setPostSize] = useState();
@@ -41,6 +41,7 @@ const LandingPage = () => {
   }, []);
 
   const getProducts = async (body) => {
+    setLoading(true);
     try {
       const response = await ProductService.getProducts(body);
 
@@ -53,6 +54,7 @@ const LandingPage = () => {
     } catch (e) {
       dispatch(alertThunk(e, "error"));
     }
+    setLoading(false);
   };
 
   const onLoadMoreProducts = () => {
@@ -165,7 +167,9 @@ const LandingPage = () => {
                 <Card
                   className="productList__item"
                   hoverable
-                  cover={<ImageSlider images={product.images} />}
+                  cover={
+                    <ImageSlider id={product._id} images={product.images} />
+                  }
                 >
                   <Meta title={product.title} description={product.price} />
                 </Card>
@@ -175,7 +179,14 @@ const LandingPage = () => {
       </Row>
       {PostSize >= Limit && (
         <div className="showProductButton">
-          <button onClick={onLoadMoreProducts}>더보기</button>
+          <Button
+            type="primary"
+            size="large"
+            loading={Loading}
+            onClick={onLoadMoreProducts}
+          >
+            Load More
+          </Button>
         </div>
       )}
     </div>

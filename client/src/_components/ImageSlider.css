@@ -1,0 +1,8 @@
+.ant-carousel {
+  padding: 30px 30px 0px 30px;
+  border-radius: 10px;
+}
+
+.slick-dots li button {
+  height: 6px !important;
+}

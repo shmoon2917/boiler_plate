@@ -24,6 +24,19 @@ const getProducts = async (body) => {
   }
 };
 
+const getProductsById = async (id) => {
+  try {
+    const response = await axios.get(
+      `${API_URL}/products_by_id?id=${id}&type=single`
+    );
+    const data = await handleResponse(response);
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const handleResponse = (response) => {
   const { status, message, data } = response.data;
 
@@ -38,4 +51,5 @@ const handleResponse = (response) => {
 export default {
   registerProduct,
   getProducts,
+  getProductsById,
 };
