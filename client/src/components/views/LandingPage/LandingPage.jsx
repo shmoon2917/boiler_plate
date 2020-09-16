@@ -1,11 +1,13 @@
+// import styles
 import "./LandingPage.css";
-import React, { useState } from "react";
-import { useEffect } from "react";
+
+// import libs and utils
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import ProductService from "../../../_services/product.service";
-import { alertThunk } from "../../../_modules/alert";
 import { Card, Col, Row } from "antd";
 import { RocketFilled } from "@ant-design/icons";
+import ProductService from "../../../_services/product.service";
+import { alertThunk } from "../../../_modules/alert";
 import ImageSlider from "../../../_components/ImageSlider";
 import CheckBox from "./Sections/CheckBox";
 import { continents } from "./Sections/Datas";
@@ -23,7 +25,7 @@ const LandingPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    let body = {
+    const body = {
       skip: Skip,
       limit: Limit,
     };
@@ -47,17 +49,28 @@ const LandingPage = () => {
   };
 
   const onLoadMoreProducts = () => {
-    let skip = Skip + Limit;
+    const skip = Skip + Limit;
 
     let body = {
       skip,
       limit: Limit,
       loadMore: true,
-      filters: { ...Filters },
+      filters: Filters,
     };
 
-    getProducts(body);
     setSkip(skip);
+    getProducts(body);
+  };
+
+  const onHandleFilters = (category) => (filters) => {
+    const handledFilters = {
+      ...Filters,
+      [category]: filters,
+    };
+
+    setFilters(handledFilters);
+
+    showFilteredResults(handledFilters);
   };
 
   const showFilteredResults = (filters) => {
@@ -67,39 +80,46 @@ const LandingPage = () => {
       filters,
     };
 
-    getProducts(body);
     setSkip(0);
-  };
-
-  const onHandleFilters = (category) => (filters) => {
-    const newFilters = { ...Filters };
-    newFilters[category] = filters;
-
-    setFilters(newFilters);
-
-    showFilteredResults(newFilters);
+    getProducts(body);
   };
 
   return (
-    <div className="pageWrapper" style={{ width: "75%", margin: "3rem auto" }}>
-      <div style={{ textAlign: "center" }}>
+    <div className="pageWrapper">
+      <div className="title">
         <h2>
           Let's Travel AnyWhere <RocketFilled />
         </h2>
       </div>
 
-      {/* Filter */}
-      <CheckBox
-        list={continents}
-        handleFilters={onHandleFilters("continent")}
-      />
-
       <Row gutter={[16, 16]}>
+        <Col lg={12} md={12} sm={24} className="">
+          <CheckBox
+            className="filter"
+            list={continents}
+            handleFilters={onHandleFilters("continent")}
+          />
+        </Col>
+        <Col lg={12} md={12} sm={24}>
+          hello
+        </Col>
+      </Row>
+      <Row gutter={[16, 16]} className="productList">
         {Products &&
           Products.map((product, index) => {
             return (
-              <Col key={index} lg={6} md={8} sm={24}>
-                <Card hoverable cover={<ImageSlider images={product.images} />}>
+              <Col
+                key={index}
+                lg={6}
+                md={8}
+                sm={24}
+                className="productList__row"
+              >
+                <Card
+                  className="productList__item"
+                  hoverable
+                  cover={<ImageSlider images={product.images} />}
+                >
                   <Meta title={product.title} description={product.price} />
                 </Card>
               </Col>
@@ -107,7 +127,7 @@ const LandingPage = () => {
           })}
       </Row>
       {PostSize >= Limit && (
-        <div style={{ textAlign: "center" }}>
+        <div className="showProductButton">
           <button onClick={onLoadMoreProducts}>더보기</button>
         </div>
       )}
