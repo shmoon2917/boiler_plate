@@ -8,7 +8,7 @@ export function ProductInfo({ detail }) {
 
   const onClickHandler = () => {
     const from = "/";
-    dispatch(addToCartThunk({ body: detail._id, from }));
+    dispatch(addToCartThunk(detail._id, from));
   };
   return (
     <div>

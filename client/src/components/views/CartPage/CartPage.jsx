@@ -16,7 +16,7 @@ function CartPage({ user }) {
         ids: cartItemIds,
         cart: user.cart,
       };
-      dispatch(getCartItemsThunk({ body }));
+      dispatch(getCartItemsThunk(body));
     }
   }, []);
 

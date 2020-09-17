@@ -26,6 +26,11 @@ const user = (state = initialState, action) => {
         action
       );
 
+    case userConstants.AUTH_USER:
+    case userConstants.AUTH_USER_SUCCESS:
+    case userConstants.AUTH_USER_ERROR:
+      return createAsyncReducer(userConstants.AUTH_USER, "auth")(state, action);
+
     case userConstants.ADD_TO_CART:
     case userConstants.ADD_TO_CART_SUCCESS:
     case userConstants.ADD_TO_CART_ERROR:

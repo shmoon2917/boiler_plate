@@ -9,13 +9,14 @@ import { asyncState } from "../../../../_lib/reducerUtils";
 import { history } from "../../../../_helpers/history";
 
 export const RightMenu = ({ mode, current, onChange }) => {
-  const user =
-    useSelector((state) => state.user.login.data) || asyncState.initial().data;
+  const { user } = useSelector((state) => state.user.auth.data) || {
+    user: null,
+  };
   const dispatch = useDispatch();
 
   const onLogoutHandler = () => {
     const from = { from: { pathname: "/" } };
-    dispatch(logoutUserThunk({ from }));
+    dispatch(logoutUserThunk(null, from));
   };
 
   const onClickCartHandler = () => {

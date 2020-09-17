@@ -14,6 +14,7 @@ export const userConstants = {
   AUTH_USER: "user/AUTH_USER",
   AUTH_USER_SUCCESS: "user/AUTH_USER_SUCCESS",
   AUTH_USER_ERROR: "user/AUTH_USER_ERROR",
+
   CLEAR_USER: "user/CLEAR_USER",
   CHECK_USER_IS_LOGGED_IN: "user/CHECK_USER_IS_LOGGED_IN",
 

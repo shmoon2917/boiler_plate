@@ -33,10 +33,10 @@ const App = () => {
   };
 
   useEffect(() => {
-    const user = AuthService.getCurrentUser();
-    if (user) {
-      dispatch(userActions.checkUserIsLoggedIn(user));
-    }
+    // const user = AuthService.getCurrentUser();
+    // if (user) {
+    //   dispatch(userActions.checkUserIsLoggedIn(user));
+    // }
     return () => {
       clearTimeout(timeout);
     };
@@ -60,12 +60,16 @@ const App = () => {
         </Header>
         <Content className="content">
           <Switch>
+            <AuthRoute exact path="/" component={LandingPage} />
+            <AuthRoute path="/login" forWho="nonUser" component={LoginPage} />
+            <AuthRoute
+              path="/register"
+              forWho="nonUser"
+              component={RegisterPage}
+            />
+            <AuthRoute path="/user/cart" component={CartPage} />
             <AuthRoute path="/product/upload" component={UploadProductPage} />
             <AuthRoute path="/product/:id" component={DetailPage} />
-            <Route exact path="/" component={LandingPage} />
-            <Route path="/login" component={LoginPage} />
-            <Route path="/register" component={RegisterPage} />
-            <AuthRoute path="/user/cart" component={CartPage} />
             <Redirect from="*" to="/" />
           </Switch>
         </Content>

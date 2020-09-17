@@ -86,12 +86,15 @@ router.post("/signin", (req, res) => {
   });
 });
 
-router.get("/", auth, (req, res) => {
+router.get("/auth", auth, (req, res) => {
   // 미들웨어를 통과했다면 Authentication 이 True 라는 뜻.
 
   res.status(200).json({
     status: "ok",
-    data: req.user,
+    data: {
+      user: req.user,
+      isAuth: true,
+    },
   });
 });
 

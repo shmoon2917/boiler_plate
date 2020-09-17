@@ -11,7 +11,7 @@ let auth = (req, res, next) => {
     if (err) throw err;
     if (!user)
       return res.json({
-        status: "error",
+        status: "ok",
         data: {},
         message: "",
         error: "인증 실패",

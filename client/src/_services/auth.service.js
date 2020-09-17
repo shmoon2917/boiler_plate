@@ -1,7 +1,7 @@
 import axios from "axios";
 import { authHeader } from "../_helpers/auth-header";
 
-const API_URL = "/api/auth";
+const API_URL = "/api/user";
 
 const register = async (body) => {
   try {
@@ -44,8 +44,18 @@ const logout = async () => {
 
 const auth = async () => {
   try {
-    const response = await axios.get(API_URL, { headers: authHeader() });
+    const response = await axios.get(`${API_URL}/auth`, {
+      headers: authHeader(),
+    });
     const data = await handleResponse(response);
+
+    if (!data) {
+      return {
+        isAuth: false,
+        user: null,
+      };
+    }
+
     return data;
   } catch (error) {
     throw error;

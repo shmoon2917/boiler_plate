@@ -17,6 +17,8 @@ const LoginPage = () => {
   const { loading, error } = useSelector((state) => state.user.login);
   const location = useLocation();
 
+  console.log("location state", location);
+
   const onSubmitForm = ({ email, password }, { setSubmitting }) => {
     const body = {
       email,
@@ -24,7 +26,7 @@ const LoginPage = () => {
     };
 
     const { from } = location.state || { from: { pathname: "/" } };
-    dispatch(loginUserThunk({ body, from: from.pathname }));
+    dispatch(loginUserThunk(body, from.pathname));
     setSubmitting = false;
   };
 

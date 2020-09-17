@@ -40,7 +40,7 @@ const RegisterPage = () => {
     };
 
     const from = "/";
-    dispatch(registerUserThunk({ body, from }));
+    dispatch(registerUserThunk(body, from));
   };
 
   return (

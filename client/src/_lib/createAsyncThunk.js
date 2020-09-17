@@ -1,7 +1,7 @@
 import { alertThunk } from "../_modules/alert";
 
 const createAsyncThunk = (type, promiseCreator) => {
-  const thunk = ({ body, from }) => {
+  const thunk = (body = {}, from = null) => {
     const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
 
     return async (dispatch, _getState, { history }) => {
@@ -14,6 +14,8 @@ const createAsyncThunk = (type, promiseCreator) => {
         if (from) {
           history.push(`${from}`);
         }
+
+        return payload;
       } catch (e) {
         dispatch({ type: ERROR, payload: e, error: true });
         dispatch(alertThunk(e, "error"));
