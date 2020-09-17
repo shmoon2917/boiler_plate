@@ -2,9 +2,11 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { Menu } from "antd";
+import { Menu, Badge } from "antd";
+import { ShoppingCartOutlined } from "@ant-design/icons";
 import { logoutUserThunk } from "../../../../_modules/user";
 import { asyncState } from "../../../../_lib/reducerUtils";
+import { history } from "../../../../_helpers/history";
 
 export const RightMenu = ({ mode, current, onChange }) => {
   const user =
@@ -14,6 +16,10 @@ export const RightMenu = ({ mode, current, onChange }) => {
   const onLogoutHandler = () => {
     const from = { from: { pathname: "/" } };
     dispatch(logoutUserThunk({ from }));
+  };
+
+  const onClickCartHandler = () => {
+    history.push("/user/cart");
   };
 
   if (!user) {
@@ -33,8 +39,15 @@ export const RightMenu = ({ mode, current, onChange }) => {
         <Menu.Item key="upload">
           <Link to="/product/upload">Upload</Link>
         </Menu.Item>
-        <Menu.Item key="logout">
-          <span onClick={onLogoutHandler}>Logout</span>
+        <Menu.Item key="cart">
+          <Badge count={5}>
+            <div onClick={onClickCartHandler}>
+              <ShoppingCartOutlined style={{ fontSize: "30px" }} />
+            </div>
+          </Badge>
+        </Menu.Item>
+        <Menu.Item key="logout" onClick={onLogoutHandler}>
+          <div onClick={onLogoutHandler}>Logout</div>
         </Menu.Item>
       </Menu>
     );

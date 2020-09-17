@@ -39,8 +39,7 @@ const RegisterPage = () => {
       confirmPassword,
     };
 
-    const { from } = { from: { pathname: "/" } };
-
+    const from = "/";
     dispatch(registerUserThunk({ body, from }));
   };
 

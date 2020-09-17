@@ -23,6 +23,14 @@ const userSchema = mongoose.Schema({
     default: 0,
   },
   image: String,
+  cart: {
+    type: Array,
+    default: [],
+  },
+  history: {
+    type: Array,
+    default: [],
+  },
   token: {
     type: String,
   },

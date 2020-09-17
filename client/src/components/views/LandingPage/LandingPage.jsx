@@ -120,7 +120,7 @@ const LandingPage = ({ history }) => {
 
   const onClickProduct = (product) => (e) => {
     console.log("card");
-    // history.push(`product/${product._id}`);
+    history.push(`product/${product._id}`);
   };
 
   return (

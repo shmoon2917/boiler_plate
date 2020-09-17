@@ -56,6 +56,23 @@ const getCurrentUser = () => {
   return JSON.parse(localStorage.getItem("user"));
 };
 
+const addToCart = async (id) => {
+  let body = {
+    productId: id,
+  };
+
+  try {
+    const response = await axios.post(`${API_URL}/addToCart`, body, {
+      headers: authHeader(),
+    });
+    console.log("res", response);
+    const data = await handleResponse(response);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const handleResponse = (response) => {
   const { status, message, data } = response.data;
 
@@ -73,4 +90,5 @@ export default {
   logout,
   getCurrentUser,
   auth,
+  addToCart,
 };

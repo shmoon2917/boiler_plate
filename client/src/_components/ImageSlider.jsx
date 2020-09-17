@@ -42,7 +42,7 @@ function ImageSlider({ images, id, bubbling }) {
         {images &&
           images.map((image, index) => {
             return (
-              <div key={index} onClick={onClickProduct}>
+              <div key={index}>
                 <img src={`http://localhost:5000/${image}`} />
               </div>
             );

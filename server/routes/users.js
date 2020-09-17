@@ -72,6 +72,8 @@ router.post("/signin", (req, res) => {
             name: user.name,
             email: user.email,
             roles: user.role,
+            cart: user.cart,
+            history: user.history,
             accessToken: user.token,
           },
           message: "로그인하셨습니다",
@@ -89,11 +91,69 @@ router.get("/", auth, (req, res) => {
 
   res.status(200).json({
     status: "ok",
-    data: {
-      isAuth: true,
-      isAdmin: req.user.role === 0 ? false : true,
-    },
+    data: req.user,
   });
+});
+
+router.post("/addToCart", auth, async (req, res) => {
+  try {
+    // 먼저 User Collection 에 해당 유저 정보 가져오기
+    const userInfo = await User.findOne({ _id: req.user._id });
+
+    // 가져온 정보에서 카트에다 넣으려 하는 상품이 이미 들어있는지 확인
+    let duplicate = false;
+
+    userInfo.cart.forEach((item) => {
+      if (item.id === req.body.productId) {
+        duplicate = true;
+      }
+    });
+
+    if (duplicate) {
+      // 상품이 이미 있을 때
+      const updatedUserInfo = await User.findOneAndUpdate(
+        { _id: req.user._id, "cart.id": req.body.productId },
+        { $inc: { "cart.$.quantity": 1 } },
+        { new: true }
+      );
+
+      return res.status(200).json({
+        status: "ok",
+        data: updatedUserInfo.cart,
+        message: "카트에 추가하는 데 성공했습니다",
+        error: "",
+      });
+    } else {
+      // 상품이 없을 때
+      const updatedUserInfo = await User.findOneAndUpdate(
+        { _id: req.user._id },
+        {
+          $push: {
+            cart: {
+              id: req.body.productId,
+              quantity: 1,
+              date: Date.now(),
+            },
+          },
+        },
+        { new: true }
+      );
+
+      return res.status(200).json({
+        status: "ok",
+        data: updatedUserInfo.cart,
+        message: "카트에 추가하는 데 성공했습니다",
+        error: "",
+      });
+    }
+  } catch (error) {
+    return res.status(400).json({
+      status: "error",
+      data: error,
+      message: "카트에 추가하는 데 실패했습니다",
+      error: "user-0005",
+    });
+  }
 });
 
 router.get("/signout", auth, (req, res) => {

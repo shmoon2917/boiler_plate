@@ -1,9 +1,15 @@
 import React from "react";
 import { Descriptions, Button } from "antd";
+import { useDispatch } from "react-redux";
+import { addToCartThunk } from "../../../../_modules/user";
 export function ProductInfo({ detail }) {
+  const dispatch = useDispatch();
   const { price, views, sold, description } = detail;
 
-  const onClickHandler = () => {};
+  const onClickHandler = () => {
+    const from = "/";
+    dispatch(addToCartThunk({ body: detail._id, from }));
+  };
   return (
     <div>
       <Descriptions title="Product Info">

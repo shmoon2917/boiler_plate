@@ -5,6 +5,8 @@ const initialState = {
   login: asyncState.initial(),
   register: asyncState.initial(),
   auth: asyncState.initial(),
+  cart: asyncState.initial(),
+  cartDetail: asyncState.initial(),
 };
 
 const user = (state = initialState, action) => {
@@ -20,6 +22,22 @@ const user = (state = initialState, action) => {
     case userConstants.REGISTER_REQUEST_SUCCESS:
     case userConstants.REGISTER_REQUEST_ERROR:
       return createAsyncReducer(userConstants.REGISTER_REQUEST, "register")(
+        state,
+        action
+      );
+
+    case userConstants.ADD_TO_CART:
+    case userConstants.ADD_TO_CART_SUCCESS:
+    case userConstants.ADD_TO_CART_ERROR:
+      return createAsyncReducer(userConstants.ADD_TO_CART, "cart")(
+        state,
+        action
+      );
+
+    case userConstants.GET_CART_ITEMS:
+    case userConstants.GET_CART_ITEMS_SUCCESS:
+    case userConstants.GET_CART_ITEMS_ERROR:
+      return createAsyncReducer(userConstants.GET_CART_ITEMS, "cartDetail")(
         state,
         action
       );

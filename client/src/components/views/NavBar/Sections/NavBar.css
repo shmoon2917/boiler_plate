@@ -48,6 +48,13 @@
   margin-right: 0px !important;
 }
 
+.menu__container .ant-menu-item a,
+.menu__container .ant-menu-item div,
+.menu__container .ant-menu-submenu-title a {
+  display: inline;
+  padding: 10px 15px !important;
+}
+
 .menu__container .ant-menu-submenu {
   margin: 0 !important;
 }
@@ -56,10 +63,9 @@
   padding: 10px 20px !important;
 }
 
-.menu__container .ant-menu-item a,
-.menu__container .ant-menu-item span,
-.menu__container .ant-menu-submenu-title a {
-  padding: 10px 15px !important;
+.ant-badge-count {
+  top: 5px;
+  right: 20px;
 }
 
 .menu__mobile-button {

@@ -24,7 +24,8 @@ const LoginPage = () => {
     };
 
     const { from } = location.state || { from: { pathname: "/" } };
-    dispatch(loginUserThunk({ body, from }));
+    dispatch(loginUserThunk({ body, from: from.pathname }));
+    setSubmitting = false;
   };
 
   return (

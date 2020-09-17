@@ -130,10 +130,10 @@ router.post("/products", async (req, res) => {
       message: "상품 정보 가져오는 데 성공했습니다",
       error: "",
     });
-  } catch (e) {
+  } catch (error) {
     return res.status(400).json({
       status: "error",
-      data: err,
+      data: error,
       message: "상품 정보 가져오는 데 실패했습니다",
       error: "product-0003",
     });
@@ -143,12 +143,14 @@ router.post("/products", async (req, res) => {
 router.get("/products_by_id", async (req, res) => {
   // productId 를 이용하여 productId에 해당하는 상품 정볼르 가져온다
   let type = req.query.type;
-  let productId = req.query.id;
+  let productIds = req.query.id;
 
-  console.log(type, productId);
+  if (type === "array") {
+    productIds = req.query.id.split(",");
+  }
 
   try {
-    const productInfo = await Product.find({ _id: productId })
+    const productInfo = await Product.find({ _id: { $in: productIds } })
       .populate("writer")
       .exec();
 
@@ -158,10 +160,10 @@ router.get("/products_by_id", async (req, res) => {
       message: "상품 정보 가져오는 데 성공했습니다",
       error: "",
     });
-  } catch (e) {
+  } catch (error) {
     return res.status(400).json({
       status: "error",
-      data: err,
+      data: error,
       message: "상품 정보 가져오는 데 실패했습니다",
       error: "product-0003",
     });

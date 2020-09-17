@@ -37,6 +37,28 @@ const getProductsById = async (id) => {
   }
 };
 
+const getCartItems = async ({ ids, cart }) => {
+  try {
+    const response = await axios.get(
+      `${API_URL}/products_by_id?id=${ids}&type=array`
+    );
+
+    const data = await handleResponse(response);
+
+    cart.forEach((item) => {
+      data.forEach((detail, i) => {
+        if (item.id === detail._id) {
+          data[i].quantity = item.quantity;
+        }
+      });
+    });
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const handleResponse = (response) => {
   const { status, message, data } = response.data;
 
@@ -52,4 +74,5 @@ export default {
   registerProduct,
   getProducts,
   getProductsById,
+  getCartItems,
 };

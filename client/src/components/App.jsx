@@ -19,6 +19,7 @@ import RegisterPage from "./views/RegisterPage";
 import UploadProductPage from "./views/UploadProductPage";
 import DetailPage from "./views/DetailPage/DetailPage";
 import NavBar from "./views/NavBar";
+import CartPage from "./views/CartPage/CartPage";
 
 const { Header, Content, Footer } = Layout;
 
@@ -59,11 +60,12 @@ const App = () => {
         </Header>
         <Content className="content">
           <Switch>
+            <AuthRoute path="/product/upload" component={UploadProductPage} />
+            <AuthRoute path="/product/:id" component={DetailPage} />
             <Route exact path="/" component={LandingPage} />
             <Route path="/login" component={LoginPage} />
             <Route path="/register" component={RegisterPage} />
-            <Route path="/product/:id" component={DetailPage} />
-            <AuthRoute path="/product/upload" component={UploadProductPage} />
+            <AuthRoute path="/user/cart" component={CartPage} />
             <Redirect from="*" to="/" />
           </Switch>
         </Content>

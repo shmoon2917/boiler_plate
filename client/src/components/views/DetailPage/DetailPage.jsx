@@ -34,8 +34,6 @@ function DetailPage({ match }) {
           <ProductInfo detail={Product} />
         </Col>
       </Row>
-
-      <br />
     </div>
   );
 }
