@@ -13,6 +13,7 @@ export function RadioBox({ list, handleFilters }) {
     } else {
       handleFilters(Selected);
     }
+    // eslint-disable-next-line
   }, [Selected]);
 
   const onHandleRadioBox = (e) => {

@@ -73,7 +73,8 @@ export default function UploadProductPage({ user, history }) {
     };
 
     try {
-      const response = await ProductService.registerProduct(body);
+      // const response =
+      await ProductService.registerProduct(body);
       // dispatch(alertThunk(response.message, 'success'));
       history.push("/");
     } catch (e) {

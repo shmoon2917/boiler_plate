@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Menu, Badge } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import { logoutUserThunk } from "../../../../_modules/user";
-import { asyncState } from "../../../../_lib/reducerUtils";
+// import { asyncState } from "../../../../_lib/reducerUtils";
 import { history } from "../../../../_helpers/history";
 
 export const RightMenu = ({ mode, current, onChange }) => {

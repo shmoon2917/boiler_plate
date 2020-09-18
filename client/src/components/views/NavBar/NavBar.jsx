@@ -14,16 +14,16 @@ import { RightMenu } from "./Sections/RightMenu";
 const NavBar = () => {
   const [visible, setVisible] = useState(false);
   const [current, setCurrent] = useState("");
-  let unListenHistory = useRef();
+  const unListenHistory = useRef();
 
   useEffect(() => {
-    unListenHistory = history.listen((location) => {
+    unListenHistory.current = history.listen((location) => {
       if (location.pathname === "/") {
         setCurrent("");
       }
     });
     return () => {
-      unListenHistory();
+      unListenHistory.current();
     };
   }, []);
 

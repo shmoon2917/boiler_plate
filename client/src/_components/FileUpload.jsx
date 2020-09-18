@@ -54,6 +54,7 @@ export default function FileUpload({ refreshFunction }) {
             key={index}
           >
             <img
+              alt="uploadImg"
               className="FileUpload__image"
               src={`http://localhost:5000/${image}`}
             />

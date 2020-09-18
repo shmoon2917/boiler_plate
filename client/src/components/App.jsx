@@ -3,14 +3,12 @@ import "./App.css";
 
 // import libs and utils
 import React, { useEffect, useRef } from "react";
-import { Router, Route, Switch, Redirect } from "react-router-dom";
+import { Router, Switch, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { history } from "../_helpers";
 import { AuthRoute } from "../_components/AuthRoute";
 import { alertActions } from "../_modules/alert";
 import { Alert, Layout } from "antd";
-import AuthService from "../_services/auth.service";
-import { userActions } from "../_modules/user";
 
 // pages for this app
 import LandingPage from "./views/LandingPage";
@@ -29,7 +27,7 @@ const App = () => {
   const timeout = useRef();
 
   const onCloseAlert = () => {
-    timeout = setTimeout(() => dispatch(alertActions.clear()), 300);
+    timeout.current = setTimeout(() => dispatch(alertActions.clear()), 300);
   };
 
   useEffect(() => {
@@ -38,7 +36,7 @@ const App = () => {
     //   dispatch(userActions.checkUserIsLoggedIn(user));
     // }
     return () => {
-      clearTimeout(timeout);
+      clearTimeout(timeout.current);
     };
     // eslint-disable-next-line
   }, []);
@@ -60,7 +58,7 @@ const App = () => {
         </Header>
         <Content className="content">
           <Switch>
-            <AuthRoute exact path="/" component={LandingPage} />
+            <AuthRoute exact path="/" forWho="all" component={LandingPage} />
             <AuthRoute path="/login" forWho="nonUser" component={LoginPage} />
             <AuthRoute
               path="/register"

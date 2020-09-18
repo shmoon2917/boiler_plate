@@ -13,6 +13,7 @@ export function CheckBox({ list, handleFilters }) {
     } else {
       handleFilters(Checked);
     }
+    // eslint-disable-next-line
   }, [Checked]);
 
   const onHandleCheckBox = (value) => () => {

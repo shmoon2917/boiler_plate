@@ -14,7 +14,7 @@ const { Title } = Typography;
 const LoginPage = () => {
   const dispatch = useDispatch();
 
-  const { loading, error } = useSelector((state) => state.user.login);
+  const { error } = useSelector((state) => state.user.login);
   const location = useLocation();
 
   console.log("location state", location);

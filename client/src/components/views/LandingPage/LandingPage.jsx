@@ -22,7 +22,7 @@ const LandingPage = ({ history }) => {
   const [Products, setProducts] = useState([]);
   const [Loading, setLoading] = useState(false);
   const [Skip, setSkip] = useState(0);
-  const [Limit, setLimit] = useState(4);
+  const [Limit] = useState(4);
   const [PostSize, setPostSize] = useState();
   const [Filters, setFilters] = useState({
     continent: [],
@@ -38,6 +38,7 @@ const LandingPage = ({ history }) => {
     };
 
     getProducts(body);
+    // eslint-disable-next-line
   }, []);
 
   const getProducts = async (body) => {

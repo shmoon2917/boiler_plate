@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import { Route, Redirect } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { asyncState } from "../_lib/reducerUtils";
+import { useDispatch } from "react-redux";
 import { history } from "../_helpers/history";
 import { authUserThunk } from "../_modules/user";
 
@@ -20,19 +19,36 @@ export const AuthRoute = ({
   // const [Loading, setLoading] = useState(false);
   const [NeedRedirect, setNeedRedirect] = useState(false);
   const User = useRef();
+  const isFirstRendered = useRef(true);
 
   console.log("AuthRoute Hooks 실행");
 
   useEffect(() => {
     console.log("AuthRoute useEffect 실행");
     getUser();
-  }, [history]);
+    // eslint-disable-next-line
+  }, [history.location.pathname]);
+
+  useEffect(() => {
+    console.log("AuthRoute useEffect 실행2");
+    if (!isFirstRendered.current) {
+      if (NeedRedirect) setNeedRedirect(false);
+    } else {
+      isFirstRendered.current = false;
+    }
+  }, [NeedRedirect]);
 
   const getUser = async () => {
     const { isAuth, user } = await dispatch(authUserThunk());
+    console.log("isAuth And User", isAuth, user, forWho);
     if (!isAuth) {
-      setNeedRedirect(true);
+      console.log("인증 실패다");
+      if (!["nonUser", "all"].includes(forWho)) {
+        // 유저가 없고, 페이지가 for user 라면
+        setNeedRedirect(true);
+      }
     } else {
+      console.log("인증 성공이다");
       User.current = user;
       if ((forWho === "admin" && user.roles === 0) || forWho === "nonUser") {
         goToLandingPage();
@@ -48,7 +64,6 @@ export const AuthRoute = ({
     <Route
       {...rest}
       render={(props) => {
-        console.log("isNeedRe", NeedRedirect);
         if (NeedRedirect) {
           return (
             <Redirect

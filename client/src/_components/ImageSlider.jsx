@@ -1,7 +1,6 @@
 import "./ImageSlider.css";
 import React, { useEffect, useRef } from "react";
 import { Carousel } from "antd";
-import { history } from "../_helpers/history";
 
 function ImageSlider({ images, id, bubbling }) {
   const carousel = useRef();
@@ -25,10 +24,11 @@ function ImageSlider({ images, id, bubbling }) {
   //   onClick={onClick}
   // />
   // );
-  const onClickProduct = (e) => {
-    console.log("image");
-    // history.push(`product/${id}`);
-  };
+
+  // const onClickProduct = (e) => {
+  //   console.log("image");
+  //   // history.push(`product/${id}`);
+  // };
 
   return (
     <div className="carouselWrapper" ref={carousel}>
@@ -43,7 +43,7 @@ function ImageSlider({ images, id, bubbling }) {
           images.map((image, index) => {
             return (
               <div key={index}>
-                <img src={`http://localhost:5000/${image}`} />
+                <img alt="thumbnail" src={`http://localhost:5000/${image}`} />
               </div>
             );
           })}

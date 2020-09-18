@@ -18,6 +18,7 @@ function CartPage({ user }) {
       };
       dispatch(getCartItemsThunk(body));
     }
+    // eslint-disable-next-line
   }, []);
 
   return <div>car</div>;

@@ -9,6 +9,7 @@ function DetailPage({ match }) {
   useEffect(() => {
     const productId = match.params.id;
     getProductsById(productId);
+    // eslint-disable-next-line
   }, []);
 
   const getProductsById = async (id) => {
