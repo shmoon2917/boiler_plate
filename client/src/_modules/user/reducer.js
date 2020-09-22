@@ -50,6 +50,7 @@ const user = (state = initialState, action) => {
     case userConstants.LOGOUT_REQUEST_SUCCESS:
       return {
         ...state,
+        auth: asyncState.initial(),
         login: asyncState.initial(),
       };
     case userConstants.CHECK_USER_IS_LOGGED_IN:

@@ -58,11 +58,11 @@ const App = () => {
         </Header>
         <Content className="content">
           <Switch>
-            <AuthRoute exact path="/" forWho="all" component={LandingPage} />
-            <AuthRoute path="/login" forWho="nonUser" component={LoginPage} />
+            <AuthRoute exact path="/" forWhom="all" component={LandingPage} />
+            <AuthRoute path="/login" forWhom="nonUser" component={LoginPage} />
             <AuthRoute
               path="/register"
-              forWho="nonUser"
+              forWhom="nonUser"
               component={RegisterPage}
             />
             <AuthRoute path="/user/cart" component={CartPage} />

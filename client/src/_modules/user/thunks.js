@@ -18,6 +18,11 @@ export const addToCartThunk = createAsyncThunk(
   AuthService.addToCart
 );
 
+export const removeCartItemThunk = createAsyncThunk(
+  userConstants.REMOVE_CART_ITEM,
+  AuthService.removeCartItem
+);
+
 export const getCartItemsThunk = createAsyncThunk(
   userConstants.GET_CART_ITEMS,
   ProductService.getCartItems

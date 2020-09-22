@@ -15,8 +15,9 @@ export const RightMenu = ({ mode, current, onChange }) => {
   const dispatch = useDispatch();
 
   const onLogoutHandler = () => {
-    const from = { from: { pathname: "/" } };
-    dispatch(logoutUserThunk(null, from));
+    console.log("why twice");
+    const { from } = { from: { pathname: "/" } };
+    dispatch(logoutUserThunk(null, from.pathname));
   };
 
   const onClickCartHandler = () => {
@@ -47,7 +48,7 @@ export const RightMenu = ({ mode, current, onChange }) => {
             </div>
           </Badge>
         </Menu.Item>
-        <Menu.Item key="logout" onClick={onLogoutHandler}>
+        <Menu.Item key="logout">
           <div onClick={onLogoutHandler}>Logout</div>
         </Menu.Item>
       </Menu>

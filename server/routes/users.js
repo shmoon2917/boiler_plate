@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { User } = require("../models/User");
 const { auth } = require("../middleware/auth");
+const Product = require("../models/Product");
 
 //=================================
 //              Auth
@@ -159,6 +160,41 @@ router.post("/addToCart", auth, async (req, res) => {
   }
 });
 
+router.post("/removeFromCart", auth, async (req, res) => {
+  try {
+    const userInfo = await User.findOneAndUpdate(
+      { _id: req.user._id },
+      {
+        $pull: { cart: { id: req.body.productId } },
+      },
+      { new: true }
+    );
+
+    let array = [];
+    if (userInfo.cart.length > 0) {
+      array = userInfo.cart.map((item) => item.id);
+    }
+
+    const productsInfo = await Product.find({ _id: { $in: array } })
+      .populate("writer")
+      .exec();
+
+    return res.status(200).json({
+      status: "ok",
+      data: { products: productsInfo, cart: userInfo.cart },
+      message: "카트에 추가하는 데 성공했습니다",
+      error: "",
+    });
+  } catch (error) {
+    return res.status(400).json({
+      status: "error",
+      data: error,
+      message: "카트에 추가하는 데 실패했습니다",
+      error: "user-0005",
+    });
+  }
+});
+
 router.get("/signout", auth, (req, res) => {
   User.findOneAndUpdate({ _id: req.user.id }, { token: "" }, (err, user) => {
     if (err)
@@ -170,7 +206,7 @@ router.get("/signout", auth, (req, res) => {
       });
     return res.status(200).send({
       status: "ok",
-      data: {},
+      data: { success: true },
       message: "로그아웃하셨습니다",
       error: "",
     });

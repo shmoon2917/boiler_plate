@@ -35,7 +35,9 @@ const logout = async () => {
       headers: authHeader(),
     });
     const data = await handleResponse(response);
+
     localStorage.removeItem("user");
+
     return data;
   } catch (error) {
     throw error;
@@ -66,17 +68,39 @@ const getCurrentUser = () => {
   return JSON.parse(localStorage.getItem("user"));
 };
 
-const addToCart = async (id) => {
-  let body = {
-    productId: id,
-  };
+const addToCart = async (productId) => {
+  let body = { productId };
 
   try {
     const response = await axios.post(`${API_URL}/addToCart`, body, {
       headers: authHeader(),
     });
-    console.log("res", response);
+
     const data = await handleResponse(response);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const removeCartItem = async (productId) => {
+  let body = { productId };
+
+  try {
+    const response = await axios.post(`${API_URL}/removeFromCart`, body, {
+      headers: authHeader(),
+    });
+
+    const data = await handleResponse(response);
+
+    data.cart.forEach((item) => {
+      data.products.forEach((product, index) => {
+        if (item.id === product._id) {
+          data.products[index].quantity = item.quantity;
+        }
+      });
+    });
+
     return data;
   } catch (error) {
     throw error;
@@ -101,4 +125,5 @@ export default {
   getCurrentUser,
   auth,
   addToCart,
+  removeCartItem,
 };

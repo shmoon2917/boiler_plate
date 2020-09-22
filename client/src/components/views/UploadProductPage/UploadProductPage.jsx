@@ -36,6 +36,7 @@ const Continents = [
 ];
 
 export default function UploadProductPage({ user, history }) {
+  console.log(user);
   const [Continent, setContinent] = useState(1);
   const [Images, setImages] = useState([]);
   const dispatch = useDispatch();

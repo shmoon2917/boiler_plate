@@ -12,13 +12,13 @@ import { authUserThunk } from "../_modules/user";
 */
 export const AuthRoute = ({
   component: Component,
-  forWho = "user",
+  forWhom = "user",
   ...rest
 }) => {
   const dispatch = useDispatch();
   // const [Loading, setLoading] = useState(false);
+  const [User, setUser] = useState(false);
   const [NeedRedirect, setNeedRedirect] = useState(false);
-  const User = useRef();
   const isFirstRendered = useRef(true);
 
   console.log("AuthRoute Hooks 실행");
@@ -40,18 +40,19 @@ export const AuthRoute = ({
 
   const getUser = async () => {
     const { isAuth, user } = await dispatch(authUserThunk());
-    console.log("isAuth And User", isAuth, user, forWho);
+    console.log("isAuth And User", isAuth, user, forWhom);
     if (!isAuth) {
       console.log("인증 실패다");
-      if (!["nonUser", "all"].includes(forWho)) {
+      if (!["nonUser", "all"].includes(forWhom)) {
         // 유저가 없고, 페이지가 for user 라면
         setNeedRedirect(true);
       }
     } else {
       console.log("인증 성공이다");
-      User.current = user;
-      if ((forWho === "admin" && user.roles === 0) || forWho === "nonUser") {
+      if ((forWhom === "admin" && user.roles === 0) || forWhom === "nonUser") {
         goToLandingPage();
+      } else {
+        setUser(user);
       }
     }
   };
@@ -71,7 +72,7 @@ export const AuthRoute = ({
             />
           );
         } else {
-          return <Component {...props} user={User.current} />;
+          return <Component {...props} user={User} />;
         }
       }}
     />
