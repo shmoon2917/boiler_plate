@@ -98,6 +98,31 @@ https://darrengwon.tistory.com/334?category=889606
 - https://dev.to/koushikrsk/differences-of-concat-and-spread-operator-1o7#:~:text=Concat()%20will%20add%20the,generator%20return%20to%20the%20array.
 - 팁: Element 가 많은 긴 Array 의 경우, spread 는 메모리 이슈가 발생할 수 있다(concat 써라)
 
-## React 에서 Redux 전에 배워야 할 8가지
+## React 에서 Redux 전에 배워야 할 몇 가지
 
 - https://edykim.com/ko/post/learn-react-before-using-redux/
+- **Redux 의 필요성에 대해서 직접 경험해보아야 Redux 를 잘 사용할 수 있다.**
+- **1)** 지역 상태 관리를 setState 함수를 사용하여 직접 경험해보기
+- **2)** 컴포넌트 트리를 따라 상위 계층의 컴포넌트로부터 프로퍼티를 계속해서 전달하는 코드를 작성해보며 불편함을 느껴보기
+- **3)** 상태를 상위 계층에서 하위로 내려보면서 상태 관리에 대해 고민해보기
+- **4)** 다른 상태 관리 방법인 Context API 를 사용해보기 (추천되는 방법은 아니지만)
+- **5)** 컨테이너와 프레젠터 패턴에 대해서 이해하기
+
+## Code Splitting Library [Loadable Components]
+
+- React 에서 제공하는 React.lazy 와 Suspense 는 아직 SSR 을 할 수 없다. Loadable Components 는 가능하다.
+- (doc) https://loadable-components.com/docs/getting-started/
+
+## React 성능 최적화: React.memo 와 useCallback, 함수형 업데이트
+
+- 메인: https://darrengwon.tistory.com/608?category=858368
+- 참고: (https://ui.toast.com/weekly-pick/ko_20190731/#:~:text=React.memo()%20%EC%9D%80%20%EC%84%B1%EB%8A%A5,%EC%A0%9C%EC%9D%B4%EC%85%98%EC%97%90%20%EC%9D%98%EC%A1%B4%ED%95%98%EB%A9%B4%20%EC%95%88%EB%90%9C%EB%8B%A4.)
+- 참고2: (https://velog.io/@yejinh/useCallback과-React.Memo을-통한-렌더링-최적화)
+
+- 퍼포먼스 측정을 위해서는 profiling 을 사용하면 된다.
+- 리스트를 렌더링 할 때는
+1. React.memo 를 통해 리스트 아이템과 리스트를 감싸줘서 props 가 동일하면 리렌더링이 되는 것을 방지하고,
+2. 인라인 함수들(대개 onClick, onSubmit 등)을 useCallback 으로 감싸줘야 하며,
+3. setState 를 이용하여 새로운 state 를 반영할 시 그 업데이트는 함수형 업데이트로 이뤄져야 한다.
+
+
