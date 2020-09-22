@@ -82,3 +82,22 @@ https://blog.eunsatio.io/develop/Javascript%EB%A1%9C-HTML-%EC%9A%94%EC%86%8C-%EC
 ## 참고 블로그
 
 https://darrengwon.tistory.com/334?category=889606
+
+## CRA Book
+
+- https://create-react-app.dev/docs/deployment
+
+## setState 를 함수형으로 사용하기
+
+- https://medium.com/@saturnuss/setstate-%EB%A5%BC-%ED%95%A8%EC%88%98%ED%98%95%EC%9C%BC%EB%A1%9C-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-763402cbc3e5
+- 함수형으로 사용하여야 리액트의 비동기 상태 업데이트 방식(batching)에 영향을 받지 않는다.
+- 함수형으로 작성하면 컴포넌트 외부에 선언해놓고 가져다 쓸 수 있다. 테스트도 쉬워지고 계속 새로운 함수를 생성하지 않아도 된다.
+
+## concat()과 spread operator([...a, b]) 의 차이점
+
+- https://dev.to/koushikrsk/differences-of-concat-and-spread-operator-1o7#:~:text=Concat()%20will%20add%20the,generator%20return%20to%20the%20array.
+- 팁: Element 가 많은 긴 Array 의 경우, spread 는 메모리 이슈가 발생할 수 있다(concat 써라)
+
+## React 에서 Redux 전에 배워야 할 8가지
+
+- https://edykim.com/ko/post/learn-react-before-using-redux/
