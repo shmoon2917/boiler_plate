@@ -78,3 +78,7 @@ https://blueshw.github.io/2018/04/23/event-bubbling-capturing/
 ## JS로 HTML 요소 순회하기
 
 https://blog.eunsatio.io/develop/Javascript%EB%A1%9C-HTML-%EC%9A%94%EC%86%8C-%EC%88%9C%ED%9A%8C%ED%95%98%EA%B8%B0
+
+## 참고 블로그
+
+https://darrengwon.tistory.com/334?category=889606
